@@ -1,142 +1,114 @@
 "use client";
+import React, { useState } from "react";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  Form,
+  Input,
+  Row,
+  Typography,
+} from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { motion } from "framer-motion";
 
-import React, {useState} from "react";
-// import {observer} from 'mobx-react-lite';
-import {Button, Card, Checkbox, Col, Form, Input, Row, Typography} from 'antd';
-import {LockOutlined, UserOutlined} from '@ant-design/icons';
-// import ParticlesLayout from "../components/Layout/ParticlesLayout";
+const { Title, Text } = Typography;
 
-const Login = () => {
-    // const store = useStore();
-    const [loading, setLoading] = useState(false);
+export default function Login() {
+  const [loading, setLoading] = useState(false);
 
-    // let history = useHistory();
+  const onFinish = (values: any) => {
+    console.log("Received values of form: ", values);
+  };
 
-    const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
-        enterLoading(values).then(res => {
-            console.log(res, "awasaa");
-        }).catch((error) => {
-            console.log({error}, "awasaa error");
-        });
-    };
+  return (
+    <div
+      style={{
+        width: "100vw",
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundImage: "url('/bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <Row justify="center">
+        <Col>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: 340,
+              padding: 24,
+              background: "rgba(255, 255, 255, 0.9)",
+              borderRadius: 16,
+              boxShadow: "0 8px 30px rgba(0, 0, 0, 0.12)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <Title level={3} style={{ marginBottom: 4, color: "#333" }}>
+              Welcome Back
+            </Title>
+            <Text type="secondary" style={{ marginBottom: 16 }}>
+              Please login to your account
+            </Text>
 
-    const enterLoading = async (props: any) => {
-        // store.setInitialToken("ayayay", "clap");
-        // return history.push("/app/page_example_1");
-    };
+            <Card
+              style={{ width: "100%", borderRadius: 12 }}
+              headStyle={{ fontSize: 14, fontWeight: 300 }}
+              bordered={false}
+              bodyStyle={{ padding: 0 }}
+            >
+              <Form layout="vertical" onFinish={onFinish} style={{ padding: 20 }}>
+                <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
+                  <Input
+                    prefix={<UserOutlined />}
+                    placeholder="Email"
+                    size="large"
+                  />
+                </Form.Item>
+                <Form.Item label="Password" name="password" rules={[{ required: true, message: 'Please input your password!' }]}>
+                  <Input.Password
+                    prefix={<LockOutlined />}
+                    placeholder="Password"
+                    size="large"
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Checkbox>Remember me</Checkbox>
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    size="large"
+                    loading={loading}
+                    block
+                    style={{
+                      backgroundColor: "#ffffff",
+                      borderColor: "#aaaaaa",
+                      color: "#000000",
+                      
+                      transition: "all 0.3s",
+                    }}
+                  >
+                    Sign In
+                  </Button>
 
-    return <div style={{width: '100vw', display: 'flex', justifyContent: 'center'}}>
-        <Row justify={'center'}>
-            <Col>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'flex-start',
-                    marginTop: '5vh',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}>
-                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'stretch'}}>
-                        <Typography.Paragraph
-                            style={{
-                                margin: 0,
-                                padding: 0,
-                                fontSize: 20,
-                                marginLeft: 5,
-                                fontWeight: 600,
-                                color: "#413d3e",
-                            }}
-                        >
-                            Boilerplate
-                        </Typography.Paragraph>
-                    </div>
-                    <Card
-                        style={{width: 320, textAlign: 'center'}}
-                        headStyle={{fontSize: 13, fontWeight: 200}}
-                        className={"shadow"}
-                        bordered={true}
-                        title={'Sign in to your account'}
-                    >
-                        <Form
-                            layout={'vertical'}
-                            name="normal_login"
-                            className="login-form"
-                            onFinish={onFinish}
-                        >
-                            <Form.Item
-                                label="Email"
-                                name="email"
-                                // size={'large'}
-                                rules={[{required: false, message: 'Please input your Username!'}]}
-                            >
-                                <Input
-                                    prefix={<UserOutlined className="site-form-item-icon"/>}
-                                    type="text"
-                                    placeholder="Email"/>
-                            </Form.Item>
-
-                            <Form.Item
-                                style={{
-                                    marginBottom: 0,
-                                }}
-                                label="Password"
-                                name="password"
-                                // size={'large'}
-                                rules={[{required: false, message: 'Please input your Password!'}]}
-                            >
-                                <Input.Password
-                                    prefix={<LockOutlined className="site-form-item-icon"/>}
-                                    type="password"
-                                    placeholder="Password"
-                                />
-                            </Form.Item>
-                            <Form.Item
-                                style={{
-                                    marginTop: 0,
-                                    marginBottom: 20,
-                                    padding: 0
-                                }}
-                                // label="Password"
-                                name="forgot-password"
-                                // size={'small'}
-                                rules={[{required: false, message: 'Please input your Password!'}]}
-                            >
-                                <a className="login-form-forgot" href="">
-                                    Forgot password
-                                </a>
-                            </Form.Item>
-
-                            <Form.Item
-                                style={{
-                                    marginBottom: 5,
-                                    textAlign: 'left'
-                                }}>
-                                <Form.Item name="remember" valuePropName="checked" noStyle>
-                                    <Checkbox>Remember me</Checkbox>
-                                </Form.Item>
-                            </Form.Item>
-
-                            <Form.Item
-                                style={{
-                                    marginBottom: 0,
-                                }}>
-                                <Button type="primary"
-                                        block
-                                        loading={loading}
-                                        htmlType="submit"
-                                        size={'large'}
-                                        onSubmit={enterLoading}
-                                        className="login-form-button">
-                                    Sign In
-                                </Button>
-                            </Form.Item>
-                        </Form>
-                    </Card>
-                </div>
-            </Col>
-        </Row>
-
-    </div>;
-};
-
-export default Login;
+                  
+                </Form.Item>
+              </Form>
+            </Card>
+          </motion.div>
+        </Col>
+      </Row>
+    </div>
+  );
+}
