@@ -7,7 +7,8 @@ import {
   LaptopOutlined,
   NotificationOutlined,
   UserOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  UnorderedListOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
@@ -94,6 +95,14 @@ const items2: MenuProps['items'] = [
     label: 'Subscriptions',   
     children: [
       { key: '/subscriptions/all', label: 'All Subscriptions' },
+    ],
+  },
+  {
+    key: 'history',
+    icon: <	UnorderedListOutlined />, 
+    label: 'History',   
+    children: [
+      { key: '/history/all', label: 'All History' },
     ],
   },
 ];

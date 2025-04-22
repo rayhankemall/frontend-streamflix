@@ -3,3 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* styles/globals.css */
+html,
+body {
+  @apply bg-black text-white;
+}
+
