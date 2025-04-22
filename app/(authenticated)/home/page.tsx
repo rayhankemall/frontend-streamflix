@@ -21,7 +21,13 @@ const HomePage = () => {
               key={movie.id}
               className="bg-gray-800 rounded-lg overflow-hidden shadow-lg"
             >
-              <img src={movie.image} alt={movie.title} className="w-full" />
+              <div className="relative w-full">
+                <img
+                  src={movie.image}
+                  alt={movie.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="p-2">
                 <h3 className="text-lg font-medium text-center">{movie.title}</h3>
               </div>
