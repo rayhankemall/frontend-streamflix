@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   HomeFilled,
   InfoCircleFilled,
@@ -91,16 +92,16 @@ const items2: MenuProps['items'] = [
   },
   {
     key: 'subscriptions',
-    icon: <	ShoppingCartOutlined />, 
-    label: 'Subscriptions',   
+    icon: <ShoppingCartOutlined />,
+    label: 'Subscriptions',
     children: [
       { key: '/subscriptions/all', label: 'All Subscriptions' },
     ],
   },
   {
     key: 'history',
-    icon: <	UnorderedListOutlined />, 
-    label: 'History',   
+    icon: <UnorderedListOutlined />,
+    label: 'History',
     children: [
       { key: '/history/all', label: 'All History' },
     ],
@@ -112,11 +113,30 @@ interface AuthenticatedLayoutProps {
 }
 
 const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) => {
+  const [darkMode, setDarkMode] = useState(true);
+
   const router = useRouter();
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") setDarkMode(false);
+  }, []);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
+
+  const toggleTheme = () => setDarkMode(!darkMode);
 
   const menu: MenuProps['items'] = [
     {
@@ -131,43 +151,53 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
     }
   ];
 
+  // Warna seragam untuk header & sider saat dark mode
+  const customDarkBg = '#0f172a'; // bisa ganti ke warna gelap lain sesuai selera
+
   return (
-    <Layout>
-      <Header className="header flex">
-        <div className="flex items-center pr-4 text-white gap-2">
+    <Layout className="dark:bg-black dark:text-white">
+      <Header
+        className="header flex text-black dark:text-white"
+        style={{ backgroundColor: darkMode ? customDarkBg : '#ffffff' }}
+      >
+        <div className="flex items-center pr-4 gap-2">
           <img src="/logo.png" alt="" className="h-8 w-auto" />
           <span>StreamFlix</span>
         </div>
 
         <Menu
-          theme="dark"
+          theme={darkMode ? 'dark' : 'light'}
           mode="horizontal"
           items={items1}
           className="flex-1"
         />
+
+        <button
+          onClick={toggleTheme}
+          className="bg-gray-200 dark:bg-gray-800 px-10 rounded text-black dark:text-white">
+          {darkMode ? "Dark" : "Light"} Mode
+        </button>
       </Header>
+
       <Layout>
-        <Sider width={200} style={{ background: colorBgContainer }}>
+        <Sider
+          width={200}
+          style={{ backgroundColor: darkMode ? customDarkBg : '#ffffff' }}
+        >
           <Menu
             mode="inline"
             defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
             style={{ height: '100%', borderRight: 0 }}
             items={menu.concat(items2)}
             onClick={({ key }) => {
               router.push(key);
             }}
+            theme={darkMode ? 'dark' : 'light'}
           />
         </Sider>
-        <Layout style={{ padding: '0 24px 24px', height: 'calc(100vh - 64px)' }}>
-          <Content
-            style={{
-              padding: 24,
-              margin: '16px 0 0 0',
-              minHeight: 280,
-              background: colorBgContainer,
-            }}
-          >
+
+        <Layout>
+          <Content>
             {children}
           </Content>
         </Layout>
