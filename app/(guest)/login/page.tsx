@@ -7,7 +7,7 @@ export default function Login() {
     <div
       className="w-screen h-screen bg-cover bg-center flex items-center justify-center"
       style={{
-        backgroundImage: "url('/bg.jpg')", 
+        backgroundImage: "url('/bg.jpg')",
       }}
     >
       <div className="bg-black bg-opacity-80 p-8 rounded-lg max-w-sm w-full text-white text-center">
@@ -19,6 +19,7 @@ export default function Login() {
             <input
               type="text"
               className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
+              placeholder="Masukkan nickname atau Gmail"
             />
           </div>
 
@@ -27,19 +28,20 @@ export default function Login() {
             <input
               type="password"
               className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
+              placeholder="Masukkan password"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2 mt-2 bg-white text-black rounded-full font-semibold hover:bg-gray-200"
+            className="w-full py-2 mt-2 bg-white text-black rounded-full font-semibold hover:bg-gray-200 transition"
           >
             LOGIN
           </button>
         </form>
 
         <p className="text-sm mt-6 font-light">
-          jika belum memiliki akun silahkan{" "}
+          Jika belum memiliki akun, silakan{" "}
           <Link href="/signup" className="text-red-500 font-medium hover:underline">
             sign up
           </Link>
