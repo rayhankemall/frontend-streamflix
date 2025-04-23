@@ -7,14 +7,15 @@ import {
   LaptopOutlined,
   NotificationOutlined,
   UserOutlined,
+  ShoppingCartOutlined
 } from '@ant-design/icons';
-import type {MenuProps} from 'antd';
-import {Layout, Menu, theme} from 'antd';
-import {useRouter} from "next/navigation";
+import type { MenuProps } from 'antd';
+import { Layout, Menu, theme } from 'antd';
+import { useRouter } from "next/navigation";
 
-const {Header, Content, Sider} = Layout;
+const { Header, Content, Sider } = Layout;
 
-// ====== ✅ Grup menu atas (Header) dibedakan jadi Genre, Watchlist, dan Populer ======
+// ====== ✅ Grup menu atas (Header) ======
 const genreItems = ['Action', 'Romance', 'Comedy'].map((name, index) => ({
   key: `genre-${index}`,
   label: `Genre: ${name}`,
@@ -30,7 +31,7 @@ const populerItems = ['Trending', 'Top Rated', 'New Releases'].map((name, index)
   label: `Populer: ${name}`,
 }));
 
-const rekomendasiItems = ['Anime', 'Live Action',].map((name, index) => ({
+const rekomendasiItems = ['Anime', 'Live Action'].map((name, index) => ({
   key: `rekomendasi-${index}`,
   label: `Rekomendasi: ${name}`,
 }));
@@ -59,35 +60,53 @@ const items1: MenuProps['items'] = [
 ];
 
 // ====== ✅ Menu samping (Sidebar) ======
-const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-  (icon, index) => {
-    const key = String(index + 1);
-
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
-
-      children: new Array(4).fill(null).map((_, j) => {
-        const subKey = index * 4 + j + 1;
-        return {
-          key: subKey,
-          label: `option${subKey}`,
-        };
-      }),
-    };
+const items2: MenuProps['items'] = [
+  {
+    key: 'user',
+    icon: <UserOutlined />,
+    label: 'Profil',
+    children: [
+      { key: '/profile', label: 'Profile' },
+      { key: '/settings', label: 'Settings' },
+    ],
   },
-);
+  {
+    key: 'device',
+    icon: <LaptopOutlined />,
+    label: 'Device Menu',
+    children: [
+      { key: '/laptop', label: 'My Laptop' },
+      { key: '/mobile', label: 'My Mobile' },
+    ],
+  },
+  {
+    key: 'notifications',
+    icon: <NotificationOutlined />,
+    label: 'Notifications',
+    children: [
+      { key: '/notifications/all', label: 'All Notifications' },
+      { key: '/notifications/mentions', label: 'Mentions' },
+    ],
+  },
+  {
+    key: 'subscriptions',
+    icon: <	ShoppingCartOutlined />, 
+    label: 'Subscriptions',   
+    children: [
+      { key: '/subscriptions/all', label: 'All Subscriptions' },
+    ],
+  },
+];
 
 interface AuthenticatedLayoutProps {
   children: React.ReactNode
 }
 
-const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({children}) => {
+const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) => {
   const router = useRouter();
 
   const {
-    token: {colorBgContainer},
+    token: { colorBgContainer },
   } = theme.useToken();
 
   const menu: MenuProps['items'] = [
@@ -106,10 +125,10 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({children}) => 
   return (
     <Layout>
       <Header className="header flex">
-      <div className="flex items-center pr-4 text-white gap-2">
-  <img src="/logo.png" alt="" className="h-8 w-auto" />
-  <span>StreamFlix</span>
-</div>
+        <div className="flex items-center pr-4 text-white gap-2">
+          <img src="/logo.png" alt="" className="h-8 w-auto" />
+          <span>StreamFlix</span>
+        </div>
 
         <Menu
           theme="dark"
@@ -119,19 +138,19 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({children}) => 
         />
       </Header>
       <Layout>
-        <Sider width={200} style={{background: colorBgContainer}}>
+        <Sider width={200} style={{ background: colorBgContainer }}>
           <Menu
             mode="inline"
             defaultSelectedKeys={['1']}
             defaultOpenKeys={['sub1']}
-            style={{height: '100%', borderRight: 0}}
+            style={{ height: '100%', borderRight: 0 }}
             items={menu.concat(items2)}
-            onClick={({key}) => {
+            onClick={({ key }) => {
               router.push(key);
             }}
           />
         </Sider>
-        <Layout style={{padding: '0 24px 24px', height: 'calc(100vh - 64px)'}}>
+        <Layout style={{ padding: '0 24px 24px', height: 'calc(100vh - 64px)' }}>
           <Content
             style={{
               padding: 24,

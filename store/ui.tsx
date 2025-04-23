@@ -1,7 +1,7 @@
 import {makeAutoObservable} from "mobx";
 
 export class UIStore {
-  title = "sup";
+  title = "StreamFlix";
 
   constructor() {
     makeAutoObservable(this);

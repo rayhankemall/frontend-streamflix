@@ -6,7 +6,7 @@ import {store} from "#/store";
 
 const Page = () => {
     return <div>
-        about: {store.ui.title}
+        About: {store.ui.title}
         <Button onClick={() => {
             store.ui.changeTitle("from about")
         }}>change title</Button>
