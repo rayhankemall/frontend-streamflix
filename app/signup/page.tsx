@@ -8,6 +8,10 @@ export default function Page() {
         backgroundImage:
           "url('/bg.jpg')"  
       }}
+
+ 
+
+
     >
       <div className="bg-black bg-opacity-70 p-10 rounded-xl shadow-lg w-full max-w-md text-white">
         <h2 className="text-center text-3xl font-serif mb-8">SIGN UP</h2>
