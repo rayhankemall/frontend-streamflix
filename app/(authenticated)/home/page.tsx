@@ -28,7 +28,7 @@ const HomePage = () => {
         { id: 2, title: "Suzume", image: "/suzume.jpg" },
         { id: 3, title: "Avatar The Way Of Water", image: "/avatar.jpg" },
         { id: 4, title: "5 CM", image: "/5cm.jpg" },
-        { id: 5, title: "Electric State", image: "/silentzone.jpg" },
+        { id: 5, title: "Electric State", image: "/electricstate.jpg" },
         { id: 6, title: "Spiderman", image: "/spiderman.jpg" },
         { id: 7, title: "Joe Crist", image: "/joecrist.jpg" },
         { id: 8, title: "Demon City", image: "/demoncity.jpg" },
