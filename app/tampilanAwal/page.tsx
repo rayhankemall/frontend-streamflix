@@ -7,7 +7,6 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
-      
       {/* Header */}
       <header className="absolute top-0 left-0 w-full flex items-center justify-between px-8 py-4 z-10">
         <div className="flex items-center space-x-2">
@@ -22,9 +21,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section
         className="relative w-full h-screen bg-cover bg-center flex items-center justify-center"
-        style={{
-          backgroundImage: "url('/bg.jpg')",
-        }}
+        style={{ backgroundImage: "url('/bg.jpg')" }}
       >
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -61,8 +58,13 @@ export default function HomePage() {
           </motion.h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-            {/* Contoh Poster */}
-            {["avatar.jpg", "pacificrim.jpg", "kiminonawa.jpg", "dilan.jpg", "sonic.jpg"].map((img, index) => (
+            {[
+              "avatar.jpg",
+              "5cm.jpg",
+              "kiminonawa.jpg",
+              "how_to_train_your_dragon.jpg",
+              "the_greatest_hits.jpg",
+            ].map((img, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -84,37 +86,139 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1f1f1f] text-white py-10">
-        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-lg font-bold mb-2">About</h3>
-            <p className="text-sm mb-4">
-              STREAMFLIX adalah platform streaming film dan serial TV terbaik yang menyediakan berbagai konten berkualitas...
+      <footer className="bg-[#530F0C] text-[#F1EDEB] py-12">
+        <div className="container mx-auto px-6 grid md:grid-cols-3 gap-12">
+          {/* About */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-white">About</h3>
+            <p className="text-sm leading-relaxed">
+              STREAMFLIX adalah platform streaming film dan serial TV terbaik
+              yang menyediakan konten berkualitas dengan subtitle Indonesia.
+              Kami hadir untuk memberikan pengalaman menonton yang lebih baik,
+              nyaman, dan tanpa gangguan iklan.
             </p>
-            <div className="flex space-x-4">
-              {/* Payment method images */}
-              <Image src="/payments/gopay.png" width={50} height={30} alt="Gopay" />
-              <Image src="/payments/ovo.png" width={50} height={30} alt="OVO" />
-              <Image src="/payments/ipay.png" width={50} height={30} alt="IPay" />
-            </div>
+            <p className="uppercase text-xs font-medium tracking-wider mb-2">
+              Payment Methods
+            </p>
+
+            
+            <motion.div
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8 }}
+  className="grid grid-cols-4 gap-4"
+>
+  {["gopay.png", "ovo2.png", "sh.png", "dana.png"].map((file, i) => (
+    <motion.div
+      key={file}
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: i * 0.2, duration: 0.5 }}
+    >
+      <Image
+        src={`/payments/${file}`}
+        alt={file.replace(".png", "")}
+        width={40}
+        height={24}
+        className="object-contain shadow-md rounded-md transition duration-300 hover:scale-105 hover:shadow-xl"
+      />
+    </motion.div>
+  ))}
+</motion.div>
+
           </div>
-          <div>
-            <h3 className="text-lg font-bold mb-2">Contact</h3>
-            <p className="text-sm">Kota Bekasi, Bantargebang, Jawa Barat</p>
-            <p className="text-sm">StreamFlix@gmail.com</p>
-            <p className="text-sm">+62 822-2222-2222</p>
-            <div className="flex space-x-4 mt-4">
-              {/* Sosial Media */}
-              <Link href="#"><Image src="/social/twitter.png" width={30} height={30} alt="Twitter" /></Link>
-              <Link href="#"><Image src="/social/instagram.png" width={30} height={30} alt="Instagram" /></Link>
-              <Link href="#"><Image src="/social/whatsapp.png" width={30} height={30} alt="Whatsapp" /></Link>
-              <Link href="#"><Image src="/social/tiktok.png" width={30} height={30} alt="Tiktok" /></Link>
-            </div>
+
+          {/* Spacer */}
+          <div className="hidden md:block" />
+
+          {/* Contact & Social */}
+          <div className="space-y-4">
+            <h3 className="text-xl font-semibold text-white">Contact Us</h3>
+            <ul className="text-sm space-y-2">
+              <li className="flex items-center">
+                <svg
+                  className="w-5 h-5 text-red-500 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z" />
+                </svg>
+                Kota Bekasi, Bantargebang, Jawa Barat
+              </li>
+              <li className="flex items-center">
+                <svg
+                  className="w-5 h-5 text-red-500 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                </svg>
+                <a
+                  href="mailto:StreamFlix@gmail.com"
+                  className="hover:text-white transition"
+                >
+                  StreamFlix@gmail.com
+                </a>
+              </li>
+              <li className="flex items-center">
+                <svg
+                  className="w-5 h-5 text-red-500 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M6.62 10.79a15.07 15.07 0 006.59 6.59l2.2-2.2a1 1 0 011.05-.24c1.12.37 2.33.57 3.57.57a1 1 0 011 1V20a1 1 0 01-1 1C9.85 21 3 14.15 3 6a1 1 0 011-1h3.5a1 1 0 011 1c0 1.24.2 2.45.57 3.57a1 1 0 01-.25 1.05l-2.2 2.2z" />
+                </svg>
+                <a
+                  href="tel:+628222222222"
+                  className="hover:text-white transition"
+                >
+                  +62 822-2222-2222
+                </a>
+              </li>
+            </ul>
+
+            <motion.div
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8 }}
+  className="flex items-center space-x-4 mt-4"
+>
+  {["x.png", "ig.png", "wa.png", "tt.png"].map((icon, i) => (
+    <motion.div
+      key={icon}
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: i * 0.2, duration: 0.5 }}
+    >
+      <Link href="#">
+        <Image
+          src={`/sosial/${icon}`}
+          width={24}
+          height={24}
+          alt={icon.replace(".png", "")}
+          className="object-contain shadow-md rounded-full transition duration-300 hover:scale-110 hover:shadow-xl"
+        />
+      </Link>
+    </motion.div>
+  ))}
+</motion.div>
+
+
           </div>
         </div>
-        <p className="text-center text-xs mt-8">&copy; 2025 StreamFlix. All Rights Reserved.</p>
-      </footer>
 
+        {/* Bottom Bar */}
+        <div className="mt-10 border-t border-[#43100D] pt-6">
+          <p className="text-center text-xs text-[#D8CFC7]">
+            &copy; 2025 Stream
+            <strong className="text-red-500">FLIX</strong>. All Rights Reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
