@@ -71,7 +71,7 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: index * 0.2 }}
               >
                 <Image
-                  src={`/movies/${img}`}  // Path yang benar
+                  src={`/movie/${img}`}
                   alt="Movie Poster"
                   width={200}
                   height={300}
