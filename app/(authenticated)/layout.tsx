@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 
 const { Header, Content, Sider } = Layout;
 
-// ====== ✅ Grup menu atas (Header) ======
+// ====== Grup menu atas (Header) ======
 const genreItems = ['Action', 'Romance', 'Comedy'].map((name, index) => ({
   key: `genre-${index}`,
   label: `Genre: ${name}`,
@@ -61,7 +61,7 @@ const items1: MenuProps['items'] = [
   },
 ];
 
-// ====== ✅ Menu samping (Sidebar) ======
+// ====== Menu samping (Sidebar) ======
 const items2: MenuProps['items'] = [
   {
     key: 'user',
@@ -114,12 +114,7 @@ interface AuthenticatedLayoutProps {
 
 const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) => {
   const [darkMode, setDarkMode] = useState(true);
-
   const router = useRouter();
-
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -151,55 +146,41 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
     }
   ];
 
-  // Warna seragam untuk header & sider saat dark mode
-  const customDarkBg = '#0f172a'; // bisa ganti ke warna gelap lain sesuai selera
-
   return (
-    <Layout className="dark:bg-black dark:text-white">
-      <Header
-        className="header flex text-black dark:text-white"
-        style={{ backgroundColor: darkMode ? customDarkBg : '#ffffff' }}
-      >
-        <div className="flex items-center pr-4 gap-2">
-          <img src="/logo.png" alt="" className="h-8 w-auto" />
-          <span>StreamFlix</span>
+    <Layout className="min-h-screen dark:bg-black dark:text-white">
+      {/* Header */}
+      <Header className="header flex items-center justify-between px-4 text-black dark:text-white dark:bg-neutral-900 bg-white transition-colors">
+        <div className="flex items-center gap-2">
+          <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
+          <span className="font-bold">StreamFlix</span>
         </div>
 
         <Menu
           theme={darkMode ? 'dark' : 'light'}
           mode="horizontal"
           items={items1}
-          className="flex-1"
-        />
-
+          className="header flex items-center justify-start px-4 text-black dark:text-white dark:bg-neutral-900 bg-white transition-colors"/>
+        
         <button
-          onClick={toggleTheme}
-          className="bg-gray-200 dark:bg-gray-800 px-10 rounded text-black dark:text-white">
+          onClick={toggleTheme}        >
           {darkMode ? "Dark" : "Light"} Mode
         </button>
       </Header>
 
+      {/* Sidebar dan Konten */}
       <Layout>
-        <Sider
-          width={200}
-          style={{ backgroundColor: darkMode ? customDarkBg : '#ffffff' }}
-        >
+        <Sider width={200} theme={darkMode ? 'dark' : 'light'} className="dark:bg-neutral-900 bg-white">
           <Menu
             mode="inline"
-            defaultSelectedKeys={['1']}
-            style={{ height: '100%', borderRight: 0 }}
+            defaultSelectedKeys={['/home']}
             items={menu.concat(items2)}
-            onClick={({ key }) => {
-              router.push(key);
-            }}
+            onClick={({ key }) => router.push(key)}
             theme={darkMode ? 'dark' : 'light'}
+            className="dark:text-white dark:bg-neutral-900 text-black bg-white"
           />
         </Sider>
-
         <Layout>
-          <Content>
-            {children}
-          </Content>
+          {children}
         </Layout>
       </Layout>
     </Layout>
