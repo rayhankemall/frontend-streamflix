@@ -73,15 +73,6 @@ const items2: MenuProps['items'] = [
     ],
   },
   {
-    key: 'device',
-    icon: <LaptopOutlined />,
-    label: 'Device Menu',
-    children: [
-      { key: '/laptop', label: 'My Laptop' },
-      { key: '/mobile', label: 'My Mobile' },
-    ],
-  },
-  {
     key: 'notifications',
     icon: <NotificationOutlined />,
     label: 'Notifications',
@@ -168,21 +159,21 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
       </Header>
 
       {/* Sidebar dan Konten */}
+    <Layout>
+      <Sider width={200} theme={darkMode ? 'dark' : 'light'} className="dark:bg-neutral-900 bg-white">
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={['/home']}
+          items={menu.concat(items2)}
+          onClick={({ key }) => router.push(key)}
+          theme={darkMode ? 'dark' : 'light'}
+          className="dark:text-white dark:bg-neutral-900 text-black bg-white"
+        />
+      </Sider>
       <Layout>
-        <Sider width={200} theme={darkMode ? 'dark' : 'light'} className="dark:bg-neutral-900 bg-white">
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['/home']}
-            items={menu.concat(items2)}
-            onClick={({ key }) => router.push(key)}
-            theme={darkMode ? 'dark' : 'light'}
-            className="dark:text-white dark:bg-neutral-900 text-black bg-white"
-          />
-        </Sider>
-        <Layout>
-          {children}
-        </Layout>
+        {children}
       </Layout>
+    </Layout>
     </Layout>
   );
 };
