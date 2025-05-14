@@ -1,9 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+
 import { useState, useEffect } from "react";
+import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
 const HomePage = () => {
   const [darkMode, setDarkMode] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -22,7 +26,7 @@ const HomePage = () => {
 
   const movieCategories = [
     {
-      title: "Movie Yang Disarankan :",
+      title: "Recommended Movies :",
       movies: [
         { id: 1, title: "Kimi No Nawa", image: "/movie/kimi_no_nawa.jpg" },
         { id: 2, title: "Suzume", image: "/movie/suzume.jpg" },
@@ -41,6 +45,7 @@ const HomePage = () => {
         { id: 15, title: "Silent Zone", image: "/movie/silent_zone.jpg" },
       ],
     },
+    // kategori lain tanpa judul
     {
       title: "",
       movies: [
@@ -59,7 +64,6 @@ const HomePage = () => {
         { id: 28, title: "Lilo & Stitch", image: "/movie/lilo_and_stitch.jpg" },
         { id: 29, title: "How to Train Your Dragon", image: "/movie/how_to_train_your_dragon.jpg" },
         { id: 30, title: "Happy Gilmore", image: "/movie/happy_gilmore.jpg" }
-    
       ],
     },
     {
@@ -107,7 +111,7 @@ const HomePage = () => {
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <div className="bg-gray-100 dark:bg-gray-900 py-1 px-1">
+              <div className="bg-gray-100 dark:bg-zinc-900 py-1 px-1">
                 <h3
                   className="text-xs font-semibold text-center truncate"
                   title={movie.title}
@@ -122,21 +126,45 @@ const HomePage = () => {
     </section>
   );
 
+  // Filter movies pada semua kategori
+  const filteredCategories = movieCategories.map((category) => ({
+    ...category,
+    movies: category.movies.filter((movie) =>
+      movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+  })).filter(category => category.movies.length > 0); 
+
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
       <main className="p-4">
-        <section className="mb-10">
-          <h1 className="text-3xl font-bold mb-2">Welcome to StreamFlix</h1>
-          <p className="text-lg">Temukan Movie Favoritmu!</p>
+        <section className="mb-10 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Welcome to StreamFlix</h1>
+            <p className="text-lg">Find your favorite movie!</p>
+          </div>
+
+          {/* Search input di atas semua kategori */}
+          <Input
+            size="small"
+            placeholder="Search movie..."
+            prefix={<SearchOutlined />}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-48  dark:text-zinc-900"
+          />
         </section>
 
-        {movieCategories.map((category, index) => (
-          <MovieRow
-            key={index}
-            title={category.title}
-            movies={category.movies}
-          />
-        ))}
+        {filteredCategories.length > 0 ? (
+          filteredCategories.map((category, index) => (
+            <MovieRow
+              key={index}
+              title={category.title}
+              movies={category.movies}
+            />
+          ))
+        ) : (
+          <p>No movie match your search.</p>
+        )}
       </main>
     </div>
   );

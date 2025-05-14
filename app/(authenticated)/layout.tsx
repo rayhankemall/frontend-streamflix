@@ -1,111 +1,71 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   HomeFilled,
   InfoCircleFilled,
-  LaptopOutlined,
-  NotificationOutlined,
+  BellFilled,
+  HistoryOutlined,
   UserOutlined,
-  ShoppingCartOutlined,
-  UnorderedListOutlined
-} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Layout, Menu, theme } from 'antd';
-import { useRouter } from "next/navigation";
+  SettingOutlined,
+} from "@ant-design/icons";
+import type { MenuProps } from "antd";
+import { Layout, Menu } from "antd";
+import { useRouter, usePathname } from "next/navigation";
 
 const { Header, Content, Sider } = Layout;
 
-// ====== Grup menu atas (Header) ======
-const genreItems = ['Action', 'Romance', 'Comedy'].map((name, index) => ({
+const genreItems = ["Action", "Romance", "Comedy"].map((name, index) => ({
   key: `genre-${index}`,
-  label: `Genre: ${name}`,
+  label: `Genre : ${name}`,
 }));
-
-const watchlistItems = ['My List', 'Watch Later', 'Favorites'].map((name, index) => ({
+const watchlistItems = [""].map((name, index) => ({
   key: `watchlist-${index}`,
-  label: `Watchlist: ${name}`,
+  label: `Watchlist ${name}`,
 }));
-
-const populerItems = ['Trending', 'Top Rated', 'New Releases'].map((name, index) => ({
+const populerItems = ["Trending", "Top Rated"].map((name, index) => ({
   key: `populer-${index}`,
-  label: `Populer: ${name}`,
+  label: `Populer : ${name}`,
 }));
-
-const rekomendasiItems = ['Anime', 'Live Action'].map((name, index) => ({
+const rekomendasiItems = ["Anime", "Live Action"].map((name, index) => ({
   key: `rekomendasi-${index}`,
-  label: `Rekomendasi: ${name}`,
+  label: `Rekomendasi : ${name}`,
 }));
 
-const items1: MenuProps['items'] = [
+const items1: MenuProps["items"] = [
   {
-    key: 'genre-group',
-    label: 'Genre',
+    key: "genre-group",
+    label: "Genre",
     children: genreItems,
   },
   {
-    key: 'watchlist-group',
-    label: 'Watchlist',
+    key: "watchlist-group",
+    label: "Watchlist",
     children: watchlistItems,
   },
   {
-    key: 'populer-group',
-    label: 'Populer',
+    key: "populer-group",
+    label: "Populer",
     children: populerItems,
   },
   {
-    key: 'rekomendasi-group',
-    label: 'Rekomendasi',
+    key: "rekomendasi-group",
+    label: "Rekomendasi",
     children: rekomendasiItems,
   },
 ];
 
-// ====== Menu samping (Sidebar) ======
-const items2: MenuProps['items'] = [
-  {
-    key: 'user',
-    icon: <UserOutlined />,
-    label: 'Profil',
-    children: [
-      { key: '/profile', label: 'Profile' },
-      { key: '/settings', label: 'Settings' },
-    ],
-  },
-  {
-    key: 'notifications',
-    icon: <NotificationOutlined />,
-    label: 'Notifications',
-    children: [
-      { key: '/notifications/all', label: 'All Notifications' },
-      { key: '/notifications/mentions', label: 'Mentions' },
-    ],
-  },
-  {
-    key: 'subscriptions',
-    icon: <ShoppingCartOutlined />,
-    label: 'Subscriptions',
-    children: [
-      { key: '/subscriptions/all', label: 'All Subscriptions' },
-    ],
-  },
-  {
-    key: 'history',
-    icon: <UnorderedListOutlined />,
-    label: 'History',
-    children: [
-      { key: '/history/all', label: 'All History' },
-    ],
-  },
-];
+const items2: MenuProps["items"] = [];
 
 interface AuthenticatedLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) => {
   const [darkMode, setDarkMode] = useState(true);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -124,7 +84,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
 
   const toggleTheme = () => setDarkMode(!darkMode);
 
-  const menu: MenuProps['items'] = [
+  const menu: MenuProps["items"] = [
     {
       key: `/home`,
       icon: <HomeFilled />,
@@ -134,46 +94,74 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
       key: `/about`,
       icon: <InfoCircleFilled />,
       label: `About`,
-    }
+    },
+    {
+      key: `/notifications`,
+      icon: <BellFilled />,
+      label: `Notifications`,
+    },
+    {
+      key: `/history`,
+      icon: <HistoryOutlined />,
+      label: `History`,
+    },
+    {
+      key: `/profile`,
+      icon: <UserOutlined />,
+      label: `Profile`,
+    },
+    {
+      key: `/settings`,
+      icon: <SettingOutlined />,
+      label: `Settings`,
+    },
   ];
 
   return (
-    <Layout className="min-h-screen dark:bg-black dark:text-white">
+    <Layout className="min-h-screen dark:bg-black dark:text-white border-none shadow-none">
       {/* Header */}
-      <Header className="header flex items-center justify-between px-4 text-black dark:text-white dark:bg-neutral-900 bg-white transition-colors">
+      <Header className="header flex items-center justify-between px-4 text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors">
         <div className="flex items-center gap-2">
           <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
           <span className="font-bold">StreamFlix</span>
         </div>
 
         <Menu
-          theme={darkMode ? 'dark' : 'light'}
+          theme={darkMode ? "dark" : "light"}
           mode="horizontal"
           items={items1}
-          className="header flex items-center justify-start px-4 text-black dark:text-white dark:bg-neutral-900 bg-white transition-colors"/>
-        
+          className="flex items-center justify-start px-4 text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors" 
+        />
+
         <button
-          onClick={toggleTheme}        >
+          onClick={toggleTheme}
+          className="px-2 py-1 rounded border dark:bg-zinc-800 border-none shadow-none"
+        >
           {darkMode ? "Dark" : "Light"} Mode
         </button>
       </Header>
 
       {/* Sidebar dan Konten */}
-    <Layout>
-      <Sider width={200} theme={darkMode ? 'dark' : 'light'} className="dark:bg-neutral-900 bg-white">
-        <Menu
-          mode="inline"
-          defaultSelectedKeys={['/home']}
-          items={menu.concat(items2)}
-          onClick={({ key }) => router.push(key)}
-          theme={darkMode ? 'dark' : 'light'}
-          className="dark:text-white dark:bg-neutral-900 text-black bg-white"
-        />
-      </Sider>
       <Layout>
-        {children}
+        <Sider
+          width={200}
+          theme={darkMode ? "dark" : "light"}
+          className="dark:bg-zinc-800 border-none shadow-none"
+        >
+          <Menu
+            mode="inline"
+            selectedKeys={[pathname]} // <-- INI BAGIAN PENTING buat highlight menu aktif sesuai URL
+            onClick={({ key }) => router.push(key)}
+            items={menu.concat(items2)}
+            theme={darkMode ? "dark" : "light"}
+            className="text-black dark:text-white dark:bg-zinc-800 border-none shadow-none"
+          />
+        </Sider>
+
+        <Layout>
+          <Content className="">{children}</Content>
+        </Layout>
       </Layout>
-    </Layout>
     </Layout>
   );
 };
