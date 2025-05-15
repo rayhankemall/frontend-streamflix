@@ -60,8 +60,8 @@ export default function HomePage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {[
               "avatar.jpg",
-              "5cm.jpg",
-              "kiminonawa.jpg",
+              "kimi_no_nawa.jpg",
+              "silent_voice.jpg",
               "how_to_train_your_dragon.jpg",
               "the_greatest_hits.jpg",
             ].map((img, index) => (
@@ -109,7 +109,7 @@ export default function HomePage() {
   transition={{ duration: 0.8 }}
   className="grid grid-cols-4 gap-4"
 >
-  {["gopay.png", "ovo2.png", "sh.png", "dana.png"].map((file, i) => (
+  {["gopay.png", "ovo.png", "sh.png", "dana.png"].map((file, i) => (
     <motion.div
       key={file}
       initial={{ opacity: 0, scale: 0.9 }}
