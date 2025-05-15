@@ -5,8 +5,6 @@ import React, { useState, useEffect } from "react";
 import {
   HomeFilled,
   InfoCircleFilled,
-  BellFilled,
-  HistoryOutlined,
   UserOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
@@ -15,28 +13,29 @@ import { Layout, Menu } from "antd";
 import { useRouter, usePathname } from "next/navigation";
 
 const { Header, Content, Sider } = Layout;
-
-const genreItems = ["Action", "Romance", "Comedy"].map((name, index) => ({
-  key: `genre-${index}`,
-  label: `Genre : ${name}`,
+const genreItems = ["Action", "Romance", "Comedy"].map((name) => ({
+  key: `/genre/${name.toLowerCase()}`,
+  label: name,
 }));
-const watchlistItems = [""].map((name, index) => ({
-  key: `watchlist-${index}`,
-  label: `Watchlist ${name}`,
+const watchlistItems = [
+  {
+    key: "/watchlist",
+    label: "Watchlist",
+  },
+];
+const populerItems = ["Trending", "Top Rated"].map((name) => ({
+  key: `/populer/${name.toLowerCase().replace(" ", "-")}`,
+  label: name,
 }));
-const populerItems = ["Trending", "Top Rated"].map((name, index) => ({
-  key: `populer-${index}`,
-  label: `Populer : ${name}`,
-}));
-const rekomendasiItems = ["Anime", "Live Action"].map((name, index) => ({
-  key: `rekomendasi-${index}`,
-  label: `Rekomendasi : ${name}`,
+const rekomendasiItems = ["Anime", "Live Action"].map((name) => ({
+  key: `/rekomendasi/${name.toLowerCase().replace(" ", "-")}`,
+  label: name,
 }));
 
 const items1: MenuProps["items"] = [
   {
     key: "genre-group",
-    label: "Genre",
+    label: "Genres",
     children: genreItems,
   },
   {
@@ -51,7 +50,7 @@ const items1: MenuProps["items"] = [
   },
   {
     key: "rekomendasi-group",
-    label: "Rekomendasi",
+    label: "Recommended",
     children: rekomendasiItems,
   },
 ];
@@ -96,16 +95,6 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
       label: `About`,
     },
     {
-      key: `/notifications`,
-      icon: <BellFilled />,
-      label: `Notifications`,
-    },
-    {
-      key: `/history`,
-      icon: <HistoryOutlined />,
-      label: `History`,
-    },
-    {
       key: `/profile`,
       icon: <UserOutlined />,
       label: `Profile`,
@@ -116,6 +105,14 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
       label: `Settings`,
     },
   ];
+
+  // Cari key yang cocok dengan pathname di semua children group menu header
+  // Kalau ada, dipakai sebagai selectedKey supaya highlight muncul
+  const selectedHeaderKeys = items1
+    .flatMap((group) => (group.children ? group.children.map((i) => i.key) : []))
+    .includes(pathname)
+    ? [pathname]
+    : [];
 
   return (
     <Layout className="min-h-screen dark:bg-black dark:text-white border-none shadow-none">
@@ -130,7 +127,9 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
           theme={darkMode ? "dark" : "light"}
           mode="horizontal"
           items={items1}
-          className="flex items-center justify-start px-4 text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors" 
+          selectedKeys={selectedHeaderKeys} // <-- highlight sesuai pathname
+          onClick={({ key }) => router.push(key)}
+          className="flex items-center justify-start px-4 text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors"
         />
 
         <button
@@ -150,7 +149,7 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
         >
           <Menu
             mode="inline"
-            selectedKeys={[pathname]} // <-- INI BAGIAN PENTING buat highlight menu aktif sesuai URL
+            selectedKeys={[pathname]}
             onClick={({ key }) => router.push(key)}
             items={menu.concat(items2)}
             theme={darkMode ? "dark" : "light"}

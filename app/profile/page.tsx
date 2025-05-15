@@ -6,8 +6,6 @@ import {
   HomeFilled,
   InfoCircleFilled,
   UserOutlined,
-  BellFilled,
-  HistoryOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -19,7 +17,7 @@ const { Header, Content, Sider } = Layout;
 // Header menu items
 const genreItems = ["Action", "Romance", "Comedy"].map((name, index) => ({
   key: `genre-${index}`,
-  label: `Genre : ${name}`,
+  label: `${name}`,
 }));
 
 const watchlistItems = [""].map((name, index) => ({
@@ -29,18 +27,18 @@ const watchlistItems = [""].map((name, index) => ({
 
 const populerItems = ["Trending", "Top Rated"].map((name, index) => ({
   key: `populer-${index}`,
-  label: `Populer : ${name}`,
+  label: `${name}`,
 }));
 
 const rekomendasiItems = ["Anime", "Live Action"].map((name, index) => ({
   key: `rekomendasi-${index}`,
-  label: `Rekomendasi : ${name}`,
+  label: `${name}`,
 }));
 
 const items1: MenuProps["items"] = [
   {
     key: "genre-group",
-    label: "Genre",
+    label: "Genres",
     children: genreItems,
   },
   {
@@ -50,12 +48,12 @@ const items1: MenuProps["items"] = [
   },
   {
     key: "populer-group",
-    label: "Populer",
+    label: "Popular",
     children: populerItems,
   },
   {
     key: "rekomendasi-group",
-    label: "Rekomendasi",
+    label: "Recommended",
     children: rekomendasiItems,
   },
 ];
@@ -96,16 +94,6 @@ export default function MovieProfilePage() {
       key: `/about`,
       icon: <InfoCircleFilled />,
       label: `About`,
-    },
-    {
-      key: "/notifications",
-      icon: <BellFilled />,
-      label: "Notifications",
-    },
-    {
-      key: "/history",
-      icon: <HistoryOutlined />,
-      label: "History",
     },
     {
       key: '/profile',
@@ -216,7 +204,7 @@ export default function MovieProfilePage() {
                   <StatBox label="Favorite Actors" value="10+" />
                 </div>
 
-                <h2 className="text-2xl font-semibold mb-4">Recently Watched</h2>
+                <h1 className="text-2xl font-bold mb-4">History</h1>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 items-stretch">
                   <MovieCard
                     title="Kimi No Nawa"

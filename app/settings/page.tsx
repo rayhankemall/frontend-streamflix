@@ -5,8 +5,6 @@ import React, { useState, useEffect } from "react";
 import {
   HomeFilled,
   InfoCircleFilled,
-  BellFilled,
-  HistoryOutlined,
   UserOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
@@ -18,7 +16,7 @@ const { Header, Content, Sider } = Layout;
 
 const genreItems = ["Action", "Romance", "Comedy"].map((name, index) => ({
   key: `genre-${index}`,
-  label: `Genre : ${name}`,
+  label: `${name}`,
 }));
 
 const watchlistItems = [""].map((name, index) => ({
@@ -28,18 +26,18 @@ const watchlistItems = [""].map((name, index) => ({
 
 const populerItems = ["Trending", "Top Rated"].map((name, index) => ({
   key: `populer-${index}`,
-  label: `Populer : ${name}`,
+  label: `${name}`,
 }));
 
 const rekomendasiItems = ["Anime", "Live Action"].map((name, index) => ({
   key: `rekomendasi-${index}`,
-  label: `Rekomendasi : ${name}`,
+  label: `${name}`,
 }));
 
 const items1: MenuProps["items"] = [
   {
     key: "genre-group",
-    label: "Genre",
+    label: "Genres",
     children: genreItems,
   },
   {
@@ -49,12 +47,12 @@ const items1: MenuProps["items"] = [
   },
   {
     key: "populer-group",
-    label: "Populer",
+    label: "Popular",
     children: populerItems,
   },
   {
     key: "rekomendasi-group",
-    label: "Rekomendasi",
+    label: "Recommended",
     children: rekomendasiItems,
   },
 ];
@@ -94,16 +92,6 @@ export default function SettingsPage() {
       key: `/about`,
       icon: <InfoCircleFilled />,
       label: `About`,
-    },
-    {
-      key: "/notifications",
-      icon: <BellFilled />,
-      label: "Notifications",
-    },
-    {
-      key: "/history",
-      icon: <HistoryOutlined />,
-      label: "History",
     },
     {
       key: "/profile",
