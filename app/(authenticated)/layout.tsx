@@ -23,12 +23,8 @@ const watchlistItems = [
     label: "Watchlist",
   },
 ];
-const populerItems = ["Trending", "Top Rated"].map((name) => ({
-  key: `/populer/${name.toLowerCase().replace(" ", "-")}`,
-  label: name,
-}));
-const rekomendasiItems = ["Anime", "Live Action"].map((name) => ({
-  key: `/rekomendasi/${name.toLowerCase().replace(" ", "-")}`,
+const populerItems = ["Trending"].map((name) => ({
+  key: `/populer/${name.toLowerCase()}`,
   label: name,
 }));
 
@@ -47,11 +43,6 @@ const items1: MenuProps["items"] = [
     key: "populer-group",
     label: "Populer",
     children: populerItems,
-  },
-  {
-    key: "rekomendasi-group",
-    label: "Recommended",
-    children: rekomendasiItems,
   },
 ];
 
