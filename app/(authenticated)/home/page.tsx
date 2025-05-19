@@ -31,7 +31,7 @@ const HomePage = () => {
         { id: 1, title: "Kimi No Nawa", image: "/movie/kimi_no_nawa.jpg" },
         { id: 2, title: "Suzume", image: "/movie/suzume.jpg" },
         { id: 3, title: "Weathering With You", image: "/movie/tenki_no_ko.jpg" },
-        { id: 4, title: "5 CM", image: "/movie/5cm.jpg" },
+        { id: 4, title: "Byousoku 5 Centimeter", image: "/movie/5cm.jpg" },
         { id: 5, title: "Silent Voice", image: "/movie/silent_voice.jpg" },
         { id: 6, title: "Hello World", image: "/movie/hello_world.jpg" },
         { id: 7, title: "Avatar The Way Of Water", image: "/movie/avatar.jpg" },
@@ -150,7 +150,7 @@ const HomePage = () => {
             prefix={<SearchOutlined />}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-48  dark:text-zinc-900"
+            className="w-48  bg-white text-black"
           />
         </section>
 

@@ -9,10 +9,11 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, ConfigProvider } from "antd";
 import { useRouter, usePathname } from "next/navigation";
 
 const { Header, Content, Sider } = Layout;
+
 const genreItems = ["Action", "Romance", "Comedy"].map((name) => ({
   key: `/genre/${name.toLowerCase()}`,
   label: name,
@@ -97,8 +98,6 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
     },
   ];
 
-  // Cari key yang cocok dengan pathname di semua children group menu header
-  // Kalau ada, dipakai sebagai selectedKey supaya highlight muncul
   const selectedHeaderKeys = items1
     .flatMap((group) => (group.children ? group.children.map((i) => i.key) : []))
     .includes(pathname)
@@ -106,53 +105,68 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
     : [];
 
   return (
-    <Layout className="min-h-screen dark:bg-black dark:text-white border-none shadow-none">
-      {/* Header */}
-      <Header className="header flex items-center justify-between px-4 text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors">
-        <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
-          <span className="font-bold">StreamFlix</span>
-        </div>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: darkMode ? "#374151" : "#6b7280", // Ganti warna utama
+          colorBgContainer: darkMode ? "#ffffff" : "#ffffff", // Warna latar kontainer
+          colorText: darkMode ? "#374151" : "#000000", // Warna teks default
+        },
+      }}
+    >
+      <Layout className="min-h-screen dark:bg-black dark:text-white border-none shadow-none">
+        {/* Header */}
+        <Header className="header flex items-center justify-between px-4 text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors">
+          {/* Kiri: Logo + Menu */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
+              <span className="font-bold">StreamFlix</span>
+            </div>
 
-        <Menu
-          theme={darkMode ? "dark" : "light"}
-          mode="horizontal"
-          items={items1}
-          selectedKeys={selectedHeaderKeys} // <-- highlight sesuai pathname
-          onClick={({ key }) => router.push(key)}
-          className="flex items-center justify-start px-4 text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors"
-        />
+            <Menu
+              theme={darkMode ? "dark" : "light"}
+              mode="horizontal"
+              items={items1}
+              selectedKeys={selectedHeaderKeys}
+              onClick={({ key }) => router.push(key)}
+              className="flex items-center text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors"
+            />
+          </div>
 
-        <button
-          onClick={toggleTheme}
-          className="px-2 py-1 rounded border dark:bg-zinc-800 border-none shadow-none"
-        >
-          {darkMode ? "Dark" : "Light"} Mode
-        </button>
-      </Header>
+          {/* Kanan: Tombol */}
+          <button
+            onClick={toggleTheme}
+            className="px-2 py-1 rounded border dark:bg-zinc-800 border-none shadow-none"
+          >
+            {darkMode ? "Dark" : "Light"} Mode
+          </button>
+        </Header>
 
-      {/* Sidebar dan Konten */}
-      <Layout>
-        <Sider
-          width={200}
-          theme={darkMode ? "dark" : "light"}
-          className="dark:bg-zinc-800 border-none shadow-none"
-        >
-          <Menu
-            mode="inline"
-            selectedKeys={[pathname]}
-            onClick={({ key }) => router.push(key)}
-            items={menu.concat(items2)}
-            theme={darkMode ? "dark" : "light"}
-            className="text-black dark:text-white dark:bg-zinc-800 border-none shadow-none"
-          />
-        </Sider>
 
+        {/* Sidebar dan Konten */}
         <Layout>
-          <Content className="">{children}</Content>
+          <Sider
+            width={200}
+            theme={darkMode ? "dark" : "light"}
+            className="dark:bg-zinc-800 border-none shadow-none"
+          >
+            <Menu
+              mode="inline"
+              selectedKeys={[pathname]}
+              onClick={({ key }) => router.push(key)}
+              items={menu.concat(items2)}
+              theme={darkMode ? "dark" : "light"}
+              className="text-black dark:text-white dark:bg-zinc-800 border-none shadow-none"
+            />
+          </Sider>
+
+          <Layout>
+            <Content className="">{children}</Content>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
+    </ConfigProvider>
   );
 };
 

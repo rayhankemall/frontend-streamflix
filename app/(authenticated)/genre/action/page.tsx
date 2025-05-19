@@ -2,9 +2,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
-const HomePage = () => {
+const ActionPage = () => {
   const [darkMode, setDarkMode] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -21,14 +24,10 @@ const HomePage = () => {
     }
   }, [darkMode]);
 
-  const movieCategories = [
+      const movieCategories = [
     {
       title: "",
       movies: [
-        
-    
-       
-       
         { id: 7, title: "Avatar The Way Of Water", image: "/movie/avatar.jpg" },
         { id: 8, title: "Demon City", image: "/movie/demon_city.jpg" },
         { id: 9, title: "Spiderman No Way Home", image: "/movie/spiderman.jpg" },
@@ -36,31 +35,29 @@ const HomePage = () => {
         { id: 11, title: "Free Guy", image: "/movie/free_guy.jpg" },
         { id: 12, title: "Dune", image: "/movie/dune.jpg" },
         { id: 13, title: "Extraction", image: "/movie/extraction.jpg" },
-        
         { id: 15, title: "Silent Zone", image: "/movie/silent_zone.jpg" },
+        { id: 16, title: "Novocaine No Pain", image: "/movie/novocaine.jpg" },
+        { id: 17, title: "Electric State", image: "/movie/electric_state.jpg" },
+        { id: 18, title: "Back in Action", image: "/movie/back_in_action.jpg" },
       ],
     },
     {
       title: "",
       movies: [
-        { id: 16, title: "Novocaine No Pain", image: "/movie/novocaine.jpg" },
-        { id: 17, title: "Electric State", image: "/movie/electric_state.jpg" },
-        { id: 18, title: "Back in Action", image: "/movie/back_in_action.jpg" },
         { id: 19, title: "The Fall Guy", image: "/movie/the_fall_guy.jpg" },
         { id: 20, title: "Hitman", image: "/movie/hitman.jpg" },
-       
         { id: 23, title: "The Smashing Machine", image: "/movie/the_smashing_machine.jpg" },
         { id: 24, title: "Thunderbolts", image: "/movie/thunderbolts.jpg" },
         { id: 25, title: "The Fantastic Four: First Steps", image: "/movie/fantastic_four_first_steps.jpg" },
         { id: 26, title: "Mission: Impossible The Final Reckoning", image: "/movie/mission_impossible_the_final_reckoning.jpg" },
         { id: 27, title: "Pacific Rim", image: "/movie/pacific_rim.jpg" },
         { id: 28, title: "Lilo & Stitch", image: "/movie/lilo_and_stitch.jpg" },
-        { id: 29, title: "How to Train Your Dragon", image: "/movie/how_to_train_your_dragon.jpg" },
-       
-      ],
-    },
-    
-  ];
+        { id: 29, title: "Mad Max: Fury Road (2015)", image: "/movie/madmax.jpg" },
+        { id: 30, title: "Gladiator (2000)", image: "/movie/gladiator.jpg" },
+        { id: 31, title: "How to Train Your Dragon", image: "/movie/how_to_train_your_dragon.jpg" },
+      ],
+    },
+  ];
 
   const MovieRow = ({
     title,
@@ -100,20 +97,47 @@ const HomePage = () => {
     </section>
   );
 
+  // Filter movies pada semua kategori
+  const filteredCategories = movieCategories.map((category) => ({
+    ...category,
+    movies: category.movies.filter((movie) =>
+      movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+  })).filter(category => category.movies.length > 0); 
+
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
       <main className="p-4">
-        <section className="mb-10">
-          <h1 className="text-3xl font-bold mb-2">ACTION</h1>
-          <p className="text-lg">Find your favorite movie!</p>
+        <section className="mb-10 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Genre : Action</h1>
+          </div>
+
+          {/* Search input di atas semua kategori */}
+          <Input
+            size="small"
+            placeholder="Search movie..."
+            prefix={<SearchOutlined />}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-48  bg-white text-black"
+          />
         </section>
 
-        {movieCategories.map((category, index) => (
-          <MovieRow key={index} title={category.title} movies={category.movies} />
-        ))}
+        {filteredCategories.length > 0 ? (
+          filteredCategories.map((category, index) => (
+            <MovieRow
+              key={index}
+              title={category.title}
+              movies={category.movies}
+            />
+          ))
+        ) : (
+          <p>No movie match your search.</p>
+        )}
       </main>
     </div>
   );
 };
 
-export default HomePage;
+export default ActionPage;

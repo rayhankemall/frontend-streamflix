@@ -21,10 +21,10 @@ export default function MovieProfilePage() {
 
             <div className="mt-6 space-y-1 text-sm">
               <p>
-                <strong>Location:</strong> Jakarta, Indonesia
+                <strong>Location:</strong> Bekasi, Indonesia
               </p>
               <p>
-                <strong>Movies Watched:</strong> 120
+                <strong>Movies Watched:</strong> 5
               </p>
               <p>
                 <strong>Favorite Genres:</strong> Sci-Fi, Action
@@ -35,7 +35,7 @@ export default function MovieProfilePage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Progress</p>
               <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2 mt-1">
                 <div
-                  className="bg-green-500 h-2 rounded-full"
+                  className="bg-red-500 h-2 rounded-full"
                   style={{ width: "75%" }}
                 ></div>
               </div>
@@ -52,10 +52,10 @@ export default function MovieProfilePage() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-            <StatBox label="Movies Watched" value="120+" />
-            <StatBox label="Wishlist" value="30+" />
-            <StatBox label="Reviews Written" value="25+" />
-            <StatBox label="Favorite Actors" value="10+" />
+            <StatBox label="Movies Watched" value="5" />
+            <StatBox label="Watchlist" value="36" />
+            <StatBox label="Reviews Written" value="0" />
+            <StatBox label="Favorite Actors" value="5" />
           </div>
 
           <h1 className="text-2xl font-bold mb-4">History</h1>
@@ -95,7 +95,7 @@ export default function MovieProfilePage() {
 function StatBox({ label, value }: { label: string; value: string }) {
   return (
     <div className="bg-gray-100 dark:bg-zinc-900 p-4 rounded-xl text-center shadow-md transition-colors duration-300">
-      <p className="text-green-500 text-xl font-bold">{value}</p>
+      <p className="text-red-500 text-xl font-bold">{value}</p>
       <p className="text-sm text-gray-700 dark:text-gray-300">{label}</p>
     </div>
   );

@@ -2,9 +2,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
-const HomePage = () => {
+const RomancePage = () => {
   const [darkMode, setDarkMode] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -21,7 +24,7 @@ const HomePage = () => {
     }
   }, [darkMode]);
 
-  const movieCategories = [
+      const movieCategories = [
     {
       title: " ",
       movies: [
@@ -33,13 +36,15 @@ const HomePage = () => {
         { id: 6, title: "Hello World", image: "/movie/hello_world.jpg" },
         { id: 14, title: "Dilan 1983", image: "/movie/dilan_1983.jpg" },
         { id: 21, title: "The Gorge", image: "/movie/the_gorge.jpg" },
+        { id: 37, title: "Follow Our Heart", image: "/movie/follow_our_heart.jpg" },
+        { id: 38, title: "Ancika: Dia yang Bersamaku 1995", image: "/movie/ancika_1995.jpg" },
+        { id: 39, title: "Pasutri Gaje", image: "/movie/pasutri_gaje.jpg" },
+        { id: 40, title: "My Name is Loh Kiwan", image: "/movie/my_name_is_loh_kiwan.jpg" },
       ],
     },
     {
       title: "",
       movies: [
-        
-       
         { id: 21, title: "The Gorge", image: "/movie/the_gorge.jpg" },
         { id: 22, title: "Promised Hearts", image: "/movie/promised_hearts.jpg" },
         { id: 31, title: "The Idea of You", image: "/movie/the_idea_of_you.jpg" },
@@ -48,26 +53,13 @@ const HomePage = () => {
         { id: 34, title: "Fly Me to the Moon", image: "/movie/fly_me_to_the_moon.jpg" },
         { id: 35, title: "The Greatest Hits", image: "/movie/the_greatest_hits.jpg" },
         { id: 36, title: "Elevator", image: "/movie/elevator.jpg" },
-       
-       
-      ],
-    },
-    {
-      title: "",
-      movies: [
-      
-        { id: 37, title: "Follow Our Heart", image: "/movie/follow_our_heart.jpg" },
-        { id: 38, title: "Ancika: Dia yang Bersamaku 1995", image: "/movie/ancika_1995.jpg" },
-        { id: 39, title: "Pasutri Gaje", image: "/movie/pasutri_gaje.jpg" },
-        { id: 40, title: "My Name is Loh Kiwan", image: "/movie/my_name_is_loh_kiwan.jpg" },
         { id: 41, title: "Love Stuck", image: "/movie/love_stuck.jpg" },
         { id: 42, title: "The Way I Love You", image: "/movie/the_way_i_love_you.jpg" },
         { id: 43, title: "Jackass", image: "/movie/jackass.jpg" },
         { id: 44, title: "Kejar Mimpi GASPOL", image: "/movie/kejar_mimpi.jpg" },
-        { id: 45, title: "Agak Laen", image: "/movie/agak_laen.jpg" },
-      ],
-    },
-  ];
+      ],
+    },
+  ];
 
   const MovieRow = ({
     title,
@@ -107,20 +99,47 @@ const HomePage = () => {
     </section>
   );
 
+  // Filter movies pada semua kategori
+  const filteredCategories = movieCategories.map((category) => ({
+    ...category,
+    movies: category.movies.filter((movie) =>
+      movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+  })).filter(category => category.movies.length > 0); 
+
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
       <main className="p-4">
-        <section className="mb-10">
-          <h1 className="text-3xl font-bold mb-2">ROMANCE</h1>
-          <p className="text-lg">Find your favorite movie!</p>
+        <section className="mb-10 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Genre : Romance</h1>
+          </div>
+
+          {/* Search input di atas semua kategori */}
+          <Input
+            size="small"
+            placeholder="Search movie..."
+            prefix={<SearchOutlined />}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-48  bg-white text-black"
+          />
         </section>
 
-        {movieCategories.map((category, index) => (
-          <MovieRow key={index} title={category.title} movies={category.movies} />
-        ))}
+        {filteredCategories.length > 0 ? (
+          filteredCategories.map((category, index) => (
+            <MovieRow
+              key={index}
+              title={category.title}
+              movies={category.movies}
+            />
+          ))
+        ) : (
+          <p>No movie match your search.</p>
+        )}
       </main>
     </div>
   );
 };
 
-export default HomePage;
+export default RomancePage;

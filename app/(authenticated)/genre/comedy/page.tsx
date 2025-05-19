@@ -2,9 +2,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
-const HomePage = () => {
+const ComedyPage = () => {
   const [darkMode, setDarkMode] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -21,13 +24,10 @@ const HomePage = () => {
     }
   }, [darkMode]);
 
-  const movieCategories = [
+      const movieCategories = [
     {
-      title: " :",
+      title: "",
       movies: [
-       
-        
-       
         { id: 9, title: "Spiderman No Way Home", image: "/movie/spiderman.jpg" },
         { id: 11, title: "Free Guy", image: "/movie/free_guy.jpg" },
         { id: 19, title: "The Fall Guy", image: "/movie/the_fall_guy.jpg" },
@@ -35,34 +35,32 @@ const HomePage = () => {
         { id: 25, title: "The Fantastic Four: First Steps", image: "/movie/fantastic_four_first_steps.jpg" },
         { id: 28, title: "Lilo & Stitch", image: "/movie/lilo_and_stitch.jpg" },
         { id: 29, title: "How to Train Your Dragon", image: "/movie/how_to_train_your_dragon.jpg" },
-        { id: 30, title: "Happy Gilmore", image: "/movie/happy_gilmore.jpg" }
-       
-        
-   
-     
+        { id: 30, title: "Happy Gilmore", image: "/movie/happy_gilmore.jpg" },
+        { id: 31, title: "The Idea of You", image: "/movie/the_idea_of_you.jpg" },
+        { id: 32, title: "Anora", image: "/movie/anora.jpg" },
+        { id: 35, title: "The Greatest Hits", image: "/movie/the_greatest_hits.jpg" },
+        { id: 36, title: "Elevator", image: "/movie/elevator.jpg" },
       ],
     },
-    
     {
       title: "",
       movies: [
-        { id: 31, title: "The Idea of You", image: "/movie/the_idea_of_you.jpg" },
-        { id: 32, title: "Anora", image: "/movie/anora.jpg" },
-     
-       
-        { id: 35, title: "The Greatest Hits", image: "/movie/the_greatest_hits.jpg" },
-        { id: 36, title: "Elevator", image: "/movie/elevator.jpg" },
-        
-       
         { id: 39, title: "Pasutri Gaje", image: "/movie/pasutri_gaje.jpg" },
-       
-        
         { id: 43, title: "Jackass", image: "/movie/jackass.jpg" },
         { id: 44, title: "Kejar Mimpi GASPOL", image: "/movie/kejar_mimpi.jpg" },
         { id: 45, title: "Agak Laen", image: "/movie/agak_laen.jpg" },
-      ],
-    },
-  ];
+        { id: 46, title: "The Hangover (2009)", image: "/movie/hangover.jpg" },
+        { id: 47, title: "Superbad (2007)", image: "/movie/superbad.jpg" },
+        { id: 48, title: "Dumb and Dumber (1994)", image: "/movie/dad.jpg" },
+        { id: 49, title: "Deadpool (2016)", image: "/movie/deadpool.jpg" },
+        { id: 50, title: "My Stupid Boss (2016)", image: "/movie/msb.jpg" },
+        { id: 51, title: "Warkop DKI Reborn: Jangkrik Boss!", image: "/movie/dki.jpg" },
+        { id: 52, title: "Kung Fu Hustle (2004)", image: "/movie/hustle.jpg" },
+        { id: 53, title: "Hello Ghost (2010)", image: "/movie/ghost.jpg" },
+      ],
+    },
+  ];
+
 
   const MovieRow = ({
     title,
@@ -102,20 +100,47 @@ const HomePage = () => {
     </section>
   );
 
+  // Filter movies pada semua kategori
+  const filteredCategories = movieCategories.map((category) => ({
+    ...category,
+    movies: category.movies.filter((movie) =>
+      movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+  })).filter(category => category.movies.length > 0); 
+
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
       <main className="p-4">
-        <section className="mb-10">
-          <h1 className="text-3xl font-bold mb-2">COMEDY</h1>
-          <p className="text-lg">Find your favorite movie!</p>
+        <section className="mb-10 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Genre : Comedy</h1>
+          </div>
+
+          {/* Search input di atas semua kategori */}
+          <Input
+            size="small"
+            placeholder="Search movie..."
+            prefix={<SearchOutlined />}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-48  bg-white text-black"
+          />
         </section>
 
-        {movieCategories.map((category, index) => (
-          <MovieRow key={index} title={category.title} movies={category.movies} />
-        ))}
+        {filteredCategories.length > 0 ? (
+          filteredCategories.map((category, index) => (
+            <MovieRow
+              key={index}
+              title={category.title}
+              movies={category.movies}
+            />
+          ))
+        ) : (
+          <p>No movie match your search.</p>
+        )}
       </main>
     </div>
   );
 };
 
-export default HomePage;
+export default ComedyPage;
