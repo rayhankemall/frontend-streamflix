@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { movieCategories } from "@/utils/movies";
 
 const ComedyPage = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -45,6 +46,7 @@ const ComedyPage = () => {
       ],
     },
   ];
+
 
 
   const MovieRow = ({
