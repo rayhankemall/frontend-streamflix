@@ -10,325 +10,356 @@ const movies = [
     videoUrl: "https://odvidhide.com/embed/a6otjvciu1pm",
     synopsis: "Kimi no Na wa (Your Name) is a Japanese animated film that tells the story of two teenagers, Taki and Mitsuha, who mysteriously start switching bodies without knowing each other. Mitsuha is a small village girl who wants to experience city life, while Taki is a city boy who is busy with his daily activities. Over time, they try to understand and live each other's lives, leaving messages and traces in each other's worlds. However, there is a big secret that connects them, related to a natural event that threatens Mitsuha's village. The film explores themes of fate, love, and time, with stunning visuals and an emotional story, carrying the audience along on their journey to find each other amidst distance and time.",
   },
-  [
   {
-    id: "",
-    title: "",
+    id: "suzume",
+    title: "Suzume",
     videoUrl: "",
     synopsis: ".",
   },
   {
-    id: "",
-    title: "",
+    id: "weatheringwithyou",
+    title: "Weathering With You",
     videoUrl: "",
     synopsis: ".",
   },
   {
-    id: "",
-    title: "",
+    id: "byousoku5centimeter",
+    title: "Byousoku 5 Centimeter",
     videoUrl: "",
     synopsis: ".",
   },
   {
-    id: "",
-    title: "",
+    id: "silentvoice",
+    title: "Silent Voice",
     videoUrl: "",
     synopsis: ".",
   },
   {
-    id: "",
-    title: "",
+    id: "helloworld",
+    title: "Hello world",
     videoUrl: "",
     synopsis: ".",
   },
   {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
+    id: "avatarthewayofwater",
+    title: "Avatar The Way Of Water",
     videoUrl: "",
     synopsis: ".",
   },
 
   {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
+    id: "demoncity",
+    title: "Demon City",
     videoUrl: "",
     synopsis: ".",
   },
 
   {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
+    id: "spidermannowayhome",
+    title: "Spiderman No Way Home",
     videoUrl: "",
     synopsis: ".",
   },
 
   {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
+    id: "joecrist",
+    title: "Joe Crist",
     videoUrl: "",
     synopsis: ".",
   },
 
   {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
-    videoUrl: "",
-    synopsis: ".",
-  },
-  {
-    id: "",
-    title: "",
+    id: "freeguy",
+    title: "Free Guy",
     videoUrl: "",
     synopsis: ".",
   },
 
   {
-    id: "",
-    title: "",
+    id: "dune",
+    title: "Dune",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "extraction",
+    title: "Extraction",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "dilan1983",
+    title: "Dilan 1983",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "silentzone",
+    title: "Silent Zone",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "novocainenopain",
+    title: "Novocaine No Pain",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "electricstate",
+    title: "Electric State",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "backinaction",
+    title: "Back in Action",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "thefallguy",
+    title: "The Fall Guy",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "hitman",
+    title: "Hitman",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "thegorge",
+    title: "The Gorge",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "promisedhearts",
+    title: "Promised Hearts",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "thesmashingmachine",
+    title: "The Smashing Machine",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "thunderbolts",
+    title: "Thunderbolts",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "thefantasticfourfirststeps",
+    title: "The Fantastic Four: First Steps",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "missionimpossiblethefinalreckoning",
+    title: "Mission: Impossible The Final Reckoning",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "pacificrim",
+    title: "Pacific Rim",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "liloandstitch",
+    title: "Lilo & Stitch",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "howtotrainyourdragon",
+    title: "How to Train Your Dragon",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "happygilmore",
+    title: "Happy Gilmore",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "theideaofyou",
+    title: "The Idea of You",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "anora",
+    title: "Anora",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "onswifthorses",
+    title: "On Swift Horses",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "flymetothemoon",
+    title: "Fly Me to the Moon",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "thegreatesthits",
+    title: "The Greatest Hits",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "elevator",
+    title: "Elevator",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "followourheart",
+    title: "Follow Our Heart",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "ancikadiayangbersamaku1995",
+    title: "Ancika: Dia yang Bersamaku 1995",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "pasutrigaje",
+    title: "Pasutri Gaje",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "mynameislohkiwan",
+    title: "My Name is Loh Kiwan",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "lovestuck",
+    title: "Love Stuck",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "thewayiloveyou",
+    title: "The Way I Love You",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "jackass",
+    title: "Jackass",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "kejarmimpigaspol",
+    title: "Kejar Mimpi GASPOL",
+    videoUrl: "",
+    synopsis: ".",
+  },
+
+  {
+    id: "agaklaen",
+    title: "Agak Laen",
     videoUrl: "",
     synopsis: ".",
   },
   {
-    id: "",
-    title: "",
+    id: "thehangover2009",
+    title: "The Hangover (2009)",
     videoUrl: "",
     synopsis: ".",
   },
-]
+  {
+    id: "superbad2007",
+    title: "Superbad (2007)",
+    videoUrl: "",
+    synopsis: ".",
+  },
+  {
+    id: "dumbanddumber1994",
+    title: "Dumb and Dumber (1994)",
+    videoUrl: "",
+    synopsis: ".",
+  },
+  {
+    id: "deadpool2016",
+    title: "Deadpool (2016)",
+    videoUrl: "",
+    synopsis: ".",
+  },
+  {
+    id: "mystupidboss2016",
+    title: "My Stupid Boss (2016)",
+    videoUrl: "",
+    synopsis: ".",
+  },
+  {
+    id: "warkopdkirebornjangkrikboss",
+    title: "Warkop DKI Reborn: Jangkrik Boss!",
+    videoUrl: "",
+    synopsis: ".",
+  },
+  {
+    id: "kungfuhustle2004",
+    title: "Kung Fu Hustle (2004)",
+    videoUrl: "",
+    synopsis: ".",
+  },
+  {
+    id: "helloghost2010",
+    title: "Hello Ghost (2010)",
+    videoUrl: "",
+    synopsis: ".",
+  },
 ];
 
 type Comment = {
