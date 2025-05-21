@@ -4,54 +4,180 @@
 import { useState, useEffect } from "react";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+
 
 const RomancePage = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
 
       const movieCategories = [
-    {
-      title: " ",
-      movies: [
-        { id: 1, title: "Kimi No Nawa", image: "/movie/kimi_no_nawa.jpg" },
-        { id: 2, title: "Suzume", image: "/movie/suzume.jpg" },
-        { id: 3, title: "Weathering With You", image: "/movie/tenki_no_ko.jpg" },
-        { id: 4, title: "5 CM", image: "/movie/5cm.jpg" },
-        { id: 5, title: "Silent Voice", image: "/movie/silent_voice.jpg" },
-        { id: 6, title: "Hello World", image: "/movie/hello_world.jpg" },
-        { id: 14, title: "Dilan 1983", image: "/movie/dilan_1983.jpg" },
-        { id: 21, title: "The Gorge", image: "/movie/the_gorge.jpg" },
-        { id: 37, title: "Follow Our Heart", image: "/movie/follow_our_heart.jpg" },
-        { id: 38, title: "Ancika: Dia yang Bersamaku 1995", image: "/movie/ancika_1995.jpg" },
-        { id: 39, title: "Pasutri Gaje", image: "/movie/pasutri_gaje.jpg" },
-        { id: 40, title: "My Name is Loh Kiwan", image: "/movie/my_name_is_loh_kiwan.jpg" },
-      ],
-    },
-    {
-      title: "",
-      movies: [
-        { id: 21, title: "The Gorge", image: "/movie/the_gorge.jpg" },
-        { id: 22, title: "Promised Hearts", image: "/movie/promised_hearts.jpg" },
-        { id: 31, title: "The Idea of You", image: "/movie/the_idea_of_you.jpg" },
-        { id: 32, title: "Anora", image: "/movie/anora.jpg" },
-        { id: 33, title: "On Swift Horses", image: "/movie/on_swift_horses.jpg" },
-        { id: 34, title: "Fly Me to the Moon", image: "/movie/fly_me_to_the_moon.jpg" },
-        { id: 35, title: "The Greatest Hits", image: "/movie/the_greatest_hits.jpg" },
-        { id: 36, title: "Elevator", image: "/movie/elevator.jpg" },
-        { id: 41, title: "Love Stuck", image: "/movie/love_stuck.jpg" },
-        { id: 42, title: "The Way I Love You", image: "/movie/the_way_i_love_you.jpg" },
-        { id: 43, title: "Jackass", image: "/movie/jackass.jpg" },
-        { id: 44, title: "Kejar Mimpi GASPOL", image: "/movie/kejar_mimpi.jpg" },
-      ],
-    },
-  ];
+  {
+    title: " ",
+    movies: [
+      {
+        id: 1,
+        title: "Kimi No Nawa",
+        image: "/movie/kimi_no_nawa.jpg",
+        slug: "kiminonawa",
+      },
+      {
+        id: 2,
+        title: "Suzume",
+        image: "/movie/suzume.jpg",
+        slug: "suzume",
+      },
+      {
+        id: 3,
+        title: "Weathering With You",
+        image: "/movie/tenki_no_ko.jpg",
+        slug: "weatheringwithyou",
+      },
+      {
+        id: 4,
+        title: "Byousoku 5 Centimeter",
+        image: "/movie/5cm.jpg",
+        slug: "byousoku5centimeter",
+      },
+      {
+        id: 5,
+        title: "Silent Voice",
+        image: "/movie/silent_voice.jpg",
+        slug: "silentvoice",
+      },
+      {
+        id: 6,
+        title: "Hello World",
+        image: "/movie/hello_world.jpg",
+        slug: "helloworld",
+      },
+      {
+        id: 14,
+        title: "Dilan 1983",
+        image: "/movie/dilan_1983.jpg",
+        slug: "dilan1983",
+      },
+      {
+        id: 21,
+        title: "The Gorge",
+        image: "/movie/the_gorge.jpg",
+        slug: "thegorge",
+      },
+      {
+        id: 37,
+        title: "Follow Our Heart",
+        image: "/movie/follow_our_heart.jpg",
+        slug: "followourheart",
+      },
+      {
+        id: 38,
+        title: "Ancika: Dia yang Bersamaku 1995",
+        image: "/movie/ancika_1995.jpg",
+        slug: "ancikadiyangbersamaku1995",
+      },
+      {
+        id: 39,
+        title: "Pasutri Gaje",
+        image: "/movie/pasutri_gaje.jpg",
+        slug: "pasutrigaje",
+      },
+      {
+        id: 40,
+        title: "My Name is Loh Kiwan",
+        image: "/movie/my_name_is_loh_kiwan.jpg",
+        slug: "mynameislohkiwan",
+      },
+    ],
+  },
+  {
+    title: "",
+    movies: [
+      {
+        id: 21,
+        title: "The Gorge",
+        image: "/movie/the_gorge.jpg",
+        slug: "thegorge",
+      },
+      {
+        id: 22,
+        title: "Promised Hearts",
+        image: "/movie/promised_hearts.jpg",
+        slug: "promisedhearts",
+      },
+      {
+        id: 31,
+        title: "The Idea of You",
+        image: "/movie/the_idea_of_you.jpg",
+        slug: "theideaofyou",
+      },
+      {
+        id: 32,
+        title: "Anora",
+        image: "/movie/anora.jpg",
+        slug: "anora",
+      },
+      {
+        id: 33,
+        title: "On Swift Horses",
+        image: "/movie/on_swift_horses.jpg",
+        slug: "onswifthorses",
+      },
+      {
+        id: 34,
+        title: "Fly Me to the Moon",
+        image: "/movie/fly_me_to_the_moon.jpg",
+        slug: "flymetothemoon",
+      },
+      {
+        id: 35,
+        title: "The Greatest Hits",
+        image: "/movie/the_greatest_hits.jpg",
+        slug: "thegreatesthits",
+      },
+      {
+        id: 36,
+        title: "Elevator",
+        image: "/movie/elevator.jpg",
+        slug: "elevator",
+      },
+      {
+        id: 41,
+        title: "Love Stuck",
+        image: "/movie/love_stuck.jpg",
+        slug: "lovestuck",
+      },
+      {
+        id: 42,
+        title: "The Way I Love You",
+        image: "/movie/the_way_i_love_you.jpg",
+        slug: "thewayi loveyou",
+      },
+      {
+        id: 43,
+        title: "Jackass",
+        image: "/movie/jackass.jpg",
+        slug: "jackass",
+      },
+      {
+        id: 44,
+        title: "Kejar Mimpi GASPOL",
+        image: "/movie/kejar_mimpi.jpg",
+        slug: "kejarmimpigaspol",
+      },
+    ],
+  },
+];
+
+
 
   const MovieRow = ({
     title,
     movies,
   }: {
     title: string;
-    movies: { id: number; title: string; image: string }[];
+    movies: { id: number; title: string; image: string; slug?: string }[];
   }) => (
     <section className="mb-8">
       {title && <h2 className="text-xl font-semibold mb-3">{title}</h2>}
@@ -61,6 +187,8 @@ const RomancePage = () => {
             <div
               key={`${title}-${movie.id}`}
               className="group rounded overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105 w-36 flex-shrink-0"
+              onClick={() => movie.slug && router.push(`/watch/${movie.slug}`)}
+              title={movie.title}
             >
               <div className="relative w-full aspect-[2/3] bg-gray-300 dark:bg-gray-800">
                 <img

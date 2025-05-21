@@ -5,48 +5,170 @@ import { useState, useEffect } from "react";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { movieCategories } from "@/utils/movies";
+import { useRouter } from "next/navigation";
 
 const ComedyPage = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
 
       const movieCategories = [
-    {
-      title: "",
-      movies: [
-        { id: 9, title: "Spiderman No Way Home", image: "/movie/spiderman.jpg" },
-        { id: 11, title: "Free Guy", image: "/movie/free_guy.jpg" },
-        { id: 19, title: "The Fall Guy", image: "/movie/the_fall_guy.jpg" },
-        { id: 20, title: "Hitman", image: "/movie/hitman.jpg" },        
-        { id: 25, title: "The Fantastic Four: First Steps", image: "/movie/fantastic_four_first_steps.jpg" },
-        { id: 28, title: "Lilo & Stitch", image: "/movie/lilo_and_stitch.jpg" },
-        { id: 29, title: "How to Train Your Dragon", image: "/movie/how_to_train_your_dragon.jpg" },
-        { id: 30, title: "Happy Gilmore", image: "/movie/happy_gilmore.jpg" },
-        { id: 31, title: "The Idea of You", image: "/movie/the_idea_of_you.jpg" },
-        { id: 32, title: "Anora", image: "/movie/anora.jpg" },
-        { id: 35, title: "The Greatest Hits", image: "/movie/the_greatest_hits.jpg" },
-        { id: 36, title: "Elevator", image: "/movie/elevator.jpg" },
-      ],
-    },
-    {
-      title: "",
-      movies: [
-        { id: 39, title: "Pasutri Gaje", image: "/movie/pasutri_gaje.jpg" },
-        { id: 43, title: "Jackass", image: "/movie/jackass.jpg" },
-        { id: 44, title: "Kejar Mimpi GASPOL", image: "/movie/kejar_mimpi.jpg" },
-        { id: 45, title: "Agak Laen", image: "/movie/agak_laen.jpg" },
-        { id: 46, title: "The Hangover (2009)", image: "/movie/hangover.jpg" },
-        { id: 47, title: "Superbad (2007)", image: "/movie/superbad.jpg" },
-        { id: 48, title: "Dumb and Dumber (1994)", image: "/movie/dad.jpg" },
-        { id: 49, title: "Deadpool (2016)", image: "/movie/deadpool.jpg" },
-        { id: 50, title: "My Stupid Boss (2016)", image: "/movie/msb.jpg" },
-        { id: 51, title: "Warkop DKI Reborn: Jangkrik Boss!", image: "/movie/dki.jpg" },
-        { id: 52, title: "Kung Fu Hustle (2004)", image: "/movie/hustle.jpg" },
-        { id: 53, title: "Hello Ghost (2010)", image: "/movie/ghost.jpg" },
-      ],
-    },
-  ];
-
+  {
+    title: "",
+    movies: [
+      {
+        id: 9,
+        title: "Spiderman No Way Home",
+        image: "/movie/spiderman.jpg",
+        slug: "spidermannowayhome",
+      },
+      {
+        id: 11,
+        title: "Free Guy",
+        image: "/movie/free_guy.jpg",
+        slug: "freeguy",
+      },
+      {
+        id: 19,
+        title: "The Fall Guy",
+        image: "/movie/the_fall_guy.jpg",
+        slug: "thefallguy",
+      },
+      {
+        id: 20,
+        title: "Hitman",
+        image: "/movie/hitman.jpg",
+        slug: "hitman",
+      },
+      {
+        id: 25,
+        title: "The Fantastic Four: First Steps",
+        image: "/movie/fantastic_four_first_steps.jpg",
+        slug: "thefantasticfourfirststeps",
+      },
+      {
+        id: 28,
+        title: "Lilo & Stitch",
+        image: "/movie/lilo_and_stitch.jpg",
+        slug: "lilostitch",
+      },
+      {
+        id: 29,
+        title: "How to Train Your Dragon",
+        image: "/movie/how_to_train_your_dragon.jpg",
+        slug: "howtotrainyourdragon",
+      },
+      {
+        id: 30,
+        title: "Happy Gilmore",
+        image: "/movie/happy_gilmore.jpg",
+        slug: "happygilmore",
+      },
+      {
+        id: 31,
+        title: "The Idea of You",
+        image: "/movie/the_idea_of_you.jpg",
+        slug: "theideaofyou",
+      },
+      {
+        id: 32,
+        title: "Anora",
+        image: "/movie/anora.jpg",
+        slug: "anora",
+      },
+      {
+        id: 35,
+        title: "The Greatest Hits",
+        image: "/movie/the_greatest_hits.jpg",
+        slug: "thegreatesthits",
+      },
+      {
+        id: 36,
+        title: "Elevator",
+        image: "/movie/elevator.jpg",
+        slug: "elevator",
+      },
+    ],
+  },
+  {
+    title: "",
+    movies: [
+      {
+        id: 39,
+        title: "Pasutri Gaje",
+        image: "/movie/pasutri_gaje.jpg",
+        slug: "pasutrigaje",
+      },
+      {
+        id: 43,
+        title: "Jackass",
+        image: "/movie/jackass.jpg",
+        slug: "jackass",
+      },
+      {
+        id: 44,
+        title: "Kejar Mimpi GASPOL",
+        image: "/movie/kejar_mimpi.jpg",
+        slug: "kejarmimpigaspol",
+      },
+      {
+        id: 45,
+        title: "Agak Laen",
+        image: "/movie/agak_laen.jpg",
+        slug: "agaklaen",
+      },
+      {
+        id: 46,
+        title: "The Hangover (2009)",
+        image: "/movie/hangover.jpg",
+        slug: "thehangover2009",
+      },
+      {
+        id: 47,
+        title: "Superbad (2007)",
+        image: "/movie/superbad.jpg",
+        slug: "superbad2007",
+      },
+      {
+        id: 48,
+        title: "Dumb and Dumber (1994)",
+        image: "/movie/dad.jpg",
+        slug: "dumbanddumber1994",
+      },
+      {
+        id: 49,
+        title: "Deadpool (2016)",
+        image: "/movie/deadpool.jpg",
+        slug: "deadpool2016",
+      },
+      {
+        id: 50,
+        title: "My Stupid Boss (2016)",
+        image: "/movie/msb.jpg",
+        slug: "mystupidboss2016",
+      },
+      {
+        id: 51,
+        title: "Warkop DKI Reborn: Jangkrik Boss!",
+        image: "/movie/dki.jpg",
+        slug: "warkopdkirebornjangkrikboss",
+      },
+      {
+        id: 52,
+        title: "Kung Fu Hustle (2004)",
+        image: "/movie/hustle.jpg",
+        slug: "kungfuhustle2004",
+      },
+      {
+        id: 53,
+        title: "Hello Ghost (2010)",
+        image: "/movie/ghost.jpg",
+        slug: "helloghost2010",
+      },
+    ],
+  },
+];
 
 
   const MovieRow = ({
@@ -54,7 +176,7 @@ const ComedyPage = () => {
     movies,
   }: {
     title: string;
-    movies: { id: number; title: string; image: string }[];
+    movies: { id: number; title: string; image: string; slug?: string }[];
   }) => (
     <section className="mb-8">
       {title && <h2 className="text-xl font-semibold mb-3">{title}</h2>}
@@ -64,6 +186,8 @@ const ComedyPage = () => {
             <div
               key={`${title}-${movie.id}`}
               className="group rounded overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105 w-36 flex-shrink-0"
+              onClick={() => movie.slug && router.push(`/watch/${movie.slug}`)}
+              title={movie.title}
             >
               <div className="relative w-full aspect-[2/3] bg-gray-300 dark:bg-gray-800">
                 <img

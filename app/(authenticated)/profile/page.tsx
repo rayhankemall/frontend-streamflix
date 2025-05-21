@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function MovieProfilePage() {
   return (
@@ -64,26 +65,31 @@ export default function MovieProfilePage() {
               title="Kimi No Nawa"
               rating="⭐ 4.5"
               image="/movie/kimi_no_nawa.jpg"
+              slug="kiminonawa"
             />
             <MovieCard
               title="Hello World"
               rating="⭐ 5.0"
               image="/movie/hello_world.jpg"
+              slug="helloworld"
             />
             <MovieCard
               title="Avatar The Way Of Water"
               rating="⭐ 5.0"
               image="/movie/avatar.jpg"
+              slug="avatarthewayofwater"
             />
             <MovieCard
               title="Spiderman No Way Home"
               rating="⭐ 4.8"
               image="/movie/spiderman.jpg"
+              slug="spidermannowayhome"
             />
             <MovieCard
               title="Silent Zone"
               rating="⭐ 4.7"
               image="/movie/silent_zone.jpg"
+              slug="silentzone"
             />
           </div>
         </section>
@@ -105,13 +111,25 @@ function MovieCard({
   title,
   rating,
   image,
+  slug,
 }: {
   title: string;
   rating: string;
   image: string;
+  slug: string;
 }) {
+  const router = useRouter();
+
   return (
-    <div className="bg-gray-100 dark:bg-zinc-900 rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden cursor-pointer group flex-col h-full">
+    <div
+      onClick={() => router.push(`/watch/${slug}`)}
+      className="bg-gray-100 dark:bg-zinc-900 rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden cursor-pointer group flex-col h-full"
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") router.push(`/watch/${slug}`);
+      }}
+    >
       <div className="relative w-full aspect-[2/3]">
         <img
           src={image}
