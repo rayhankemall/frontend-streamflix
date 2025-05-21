@@ -32,7 +32,9 @@ export default function MovieProfilePage() {
             </div>
 
             <div className="mt-6">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Progress</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Progress
+              </p>
               <div className="w-full bg-gray-300 dark:bg-gray-700 rounded-full h-2 mt-1">
                 <div
                   className="bg-green-500 h-2 rounded-full"
@@ -123,7 +125,9 @@ function MovieCard({
         <h3 className="text-sm font-semibold truncate" title={title}>
           {title}
         </h3>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{rating}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          {rating}
+        </p>
       </div>
     </div>
   );

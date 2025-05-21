@@ -63,9 +63,7 @@ export default function Login() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-left"
           >
-            <label className="block mb-1 font-light text-sm">
-              EMAIL
-            </label>
+            <label className="block mb-1 font-light text-sm">EMAIL</label>
             <input
               type="email"
               value={email}
@@ -82,9 +80,7 @@ export default function Login() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-left"
           >
-            <label className="block mb-1 font-light text-sm">
-              PASSWORD
-            </label>
+            <label className="block mb-1 font-light text-sm">PASSWORD</label>
             <input
               type="password"
               value={password}
@@ -113,7 +109,10 @@ export default function Login() {
         >
           Jika belum memiliki akun, silakan{" "}
           <motion.span whileHover={{ scale: 1.1 }} className="inline-block">
-            <Link href="/signup" className="text-red-500 font-medium hover:underline">
+            <Link
+              href="/signup"
+              className="text-red-500 font-medium hover:underline"
+            >
               sign up
             </Link>
           </motion.span>
