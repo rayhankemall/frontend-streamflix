@@ -233,7 +233,7 @@ const HomePage = () => {
             prefix={<SearchOutlined />}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-48  dark:text-zinc-900"
+            className="w-48  bg-white text-black"
           />
         </section>
 
