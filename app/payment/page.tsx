@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { FaArrowLeft, FaWhatsapp } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import Link from "next/link";
 
 export default function PaymentPage() {
@@ -30,19 +30,31 @@ export default function PaymentPage() {
     }
   };
 
-  const handleSendToWhatsApp = () => {
+  const handleSendToTelegram = async () => {
     if (!selectedFile) {
       alert("Silakan upload bukti pembayaran terlebih dahulu.");
       return;
     }
 
-    const message = `Halo Admin, saya ingin konfirmasi pembayaran:\n\n📦 Paket: ${plan}\n💵 Jumlah: Rp ${Number(amount).toLocaleString(
-      "id-ID"
-    )}\n🧾 Bukti pembayaran sudah saya upload. Silakan cek.`;
+    const formData = new FormData();
+    const fileName = `bukti__${plan}__${amount}.jpg`;
+    formData.append("file", selectedFile, fileName);
 
-    const whatsappNumber = "62085211419409"; 
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
+    try {
+      const response = await fetch("https://844d-2a09-bac1-34a0-30-00-3c1-11.ngrok-free.app/payment/upload-proof", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert("Bukti pembayaran berhasil dikirim ke admin di Telegram! ✅");
+      } else {
+        alert("Gagal mengirim bukti ke Telegram. ❌");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Terjadi kesalahan saat mengirim bukti.");
+    }
   };
 
   return (
@@ -50,10 +62,8 @@ export default function PaymentPage() {
       className="min-h-screen bg-cover bg-center relative flex items-center justify-center px-4"
       style={{ backgroundImage: "url('/bg.jpg')" }}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-md z-0" />
 
-      {/* Tombol Back */}
       <Link
         href="/"
         className="absolute top-4 left-4 z-20 bg-white/20 hover:bg-white/30 p-2 rounded-full transition"
@@ -61,7 +71,6 @@ export default function PaymentPage() {
         <FaArrowLeft className="text-white" />
       </Link>
 
-      {/* Content */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -77,12 +86,30 @@ export default function PaymentPage() {
           Pembayaran Paket {plan}
         </motion.h1>
 
-        <p className="mb-4 text-center">Silakan scan QR atau bayar sebesar:</p>
-        <p className="text-3xl font-bold text-center mb-6">
-          Rp {Number(amount).toLocaleString("id-ID")}
-        </p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
+          className="mb-4 text-center"
+        >
+          Silakan scan QR atau bayar sebesar:
+        </motion.p>
 
-        <div className="flex justify-center mb-4">
+        <motion.p
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="text-3xl font-bold text-center mb-6"
+        >
+          Rp {Number(amount).toLocaleString("id-ID")}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="flex justify-center mb-4"
+        >
           <Image
             src="/qr.jpg"
             alt="QR Code"
@@ -90,10 +117,14 @@ export default function PaymentPage() {
             height={200}
             className="rounded-lg border border-white/20"
           />
-        </div>
+        </motion.div>
 
-        {/* Upload bukti */}
-        <div className="mt-6">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.4 }}
+          className="mt-6"
+        >
           <label className="block mb-2 font-semibold text-sm">
             Upload Bukti Pembayaran
           </label>
@@ -112,18 +143,25 @@ export default function PaymentPage() {
               className="rounded-md mt-4 mx-auto border border-white/20"
             />
           )}
-        </div>
+        </motion.div>
 
-        {/* Tombol WhatsApp */}
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={handleSendToWhatsApp}
-          className="flex items-center gap-2 justify-center mt-6 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md text-sm font-semibold transition w-full"
+          onClick={handleSendToTelegram}
+          className="flex items-center gap-2 justify-center mt-6 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md text-sm font-semibold transition w-full"
         >
-          <FaWhatsapp />
-          Kirim ke Admin
+          📤 Kirim ke Admin via Telegram
         </motion.button>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.3 }}
+          className="mt-3 text-xs text-center text-white/80"
+        >
+          Admin akan segera memverifikasi bukti pembayaran kamu 💌
+        </motion.p>
       </motion.div>
     </div>
   );
