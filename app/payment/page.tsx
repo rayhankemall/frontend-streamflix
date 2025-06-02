@@ -4,15 +4,15 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { FaArrowLeft, FaWhatsapp } from "react-icons/fa";
 import Link from "next/link";
-import { FaWhatsapp, FaArrowLeft } from "react-icons/fa";
 
 export default function PaymentPage() {
   const searchParams = useSearchParams();
   const [amount, setAmount] = useState("");
   const [plan, setPlan] = useState("");
-  const [proof, setProof] = useState<File | null>(null);
-  const [error, setError] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewURL, setPreviewURL] = useState<string | null>(null);
 
   useEffect(() => {
     const amountParam = searchParams.get("amount");
@@ -22,22 +22,26 @@ export default function PaymentPage() {
     if (planParam) setPlan(planParam);
   }, [searchParams]);
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setProof(file);
-    setError("");
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreviewURL(URL.createObjectURL(file));
+    }
   };
 
-  const handleSend = () => {
-    if (!proof) {
-      setError("Mohon upload bukti pembayaran terlebih dahulu.");
+  const handleSendToWhatsApp = () => {
+    if (!selectedFile) {
+      alert("Silakan upload bukti pembayaran terlebih dahulu.");
       return;
     }
 
-    const phone = "6285211419409"; 
-    const message = `Halo Admin, saya sudah membayar paket ${plan} sebesar Rp ${amount}. Berikut bukti pembayaran saya.`;
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    const message = `Halo Admin, saya ingin konfirmasi pembayaran:\n\n📦 Paket: ${plan}\n💵 Jumlah: Rp ${Number(amount).toLocaleString(
+      "id-ID"
+    )}\n🧾 Bukti pembayaran sudah saya upload. Silakan cek.`;
 
+    const whatsappNumber = "62085211419409"; 
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
 
@@ -49,12 +53,12 @@ export default function PaymentPage() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-md z-0" />
 
-      {/* Back Button */}
+      {/* Tombol Back */}
       <Link
         href="/"
-        className="absolute top-6 left-6 z-10 text-white hover:text-gray-300 text-xl"
+        className="absolute top-4 left-4 z-20 bg-white/20 hover:bg-white/30 p-2 rounded-full transition"
       >
-        <FaArrowLeft />
+        <FaArrowLeft className="text-white" />
       </Link>
 
       {/* Content */}
@@ -67,21 +71,16 @@ export default function PaymentPage() {
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ duration: 0.6 }}
           className="text-2xl font-bold mb-6 text-center"
         >
           Pembayaran Paket {plan}
         </motion.h1>
 
-        <p className="mb-2 text-center">Silakan scan QR atau bayar sebesar:</p>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-3xl font-bold text-center mb-6"
-        >
+        <p className="mb-4 text-center">Silakan scan QR atau bayar sebesar:</p>
+        <p className="text-3xl font-bold text-center mb-6">
           Rp {Number(amount).toLocaleString("id-ID")}
-        </motion.p>
+        </p>
 
         <div className="flex justify-center mb-4">
           <Image
@@ -93,25 +92,37 @@ export default function PaymentPage() {
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-sm mb-2">Upload Bukti Pembayaran:</label>
+        {/* Upload bukti */}
+        <div className="mt-6">
+          <label className="block mb-2 font-semibold text-sm">
+            Upload Bukti Pembayaran
+          </label>
           <input
             type="file"
             accept="image/*"
-            onChange={handleUpload}
-            className="w-full bg-white/20 text-white p-2 rounded border border-white/30"
+            onChange={handleFileChange}
+            className="w-full text-sm text-white bg-white/20 rounded-md p-2"
           />
+          {previewURL && (
+            <Image
+              src={previewURL}
+              alt="Preview"
+              width={300}
+              height={300}
+              className="rounded-md mt-4 mx-auto border border-white/20"
+            />
+          )}
         </div>
 
-        {error && <p className="text-red-400 text-sm mb-4 text-center">{error}</p>}
-
+        {/* Tombol WhatsApp */}
         <motion.button
-          whileTap={{ scale: 0.95 }}
           whileHover={{ scale: 1.05 }}
-          onClick={handleSend}
-          className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded mt-4"
+          whileTap={{ scale: 0.95 }}
+          onClick={handleSendToWhatsApp}
+          className="flex items-center gap-2 justify-center mt-6 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md text-sm font-semibold transition w-full"
         >
-          <FaWhatsapp /> Kirim ke Admin
+          <FaWhatsapp />
+          Kirim ke Admin
         </motion.button>
       </motion.div>
     </div>

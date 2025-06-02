@@ -234,7 +234,12 @@ const ActionPage = () => {
             />
           ))
         ) : (
-          <p>No movie match your search.</p>
+          <p>No movie match your search.</p> 
+
+
+
+
+          
         )}
       </main>
     </div>

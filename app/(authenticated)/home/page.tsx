@@ -10,6 +10,8 @@ const HomePage = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
+ 
+
   const movieCategories = [
   {
     title: "Recommended Movies :",
