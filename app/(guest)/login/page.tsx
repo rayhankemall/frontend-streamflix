@@ -27,12 +27,17 @@ export default function Login() {
       if (!res.ok) {
         throw new Error(data.message || "Login gagal");
       }
+// Setelah login sukses
+document.cookie = `token=${data.access_token}; path=/`;
 
-      // Simpan token di localStorage
-      localStorage.setItem("token", data.access_token);
+     localStorage.setItem("token", data.access_token);
+document.cookie = `token=${data.access_token}; path=/`;
+router.push("/SubscriptionPlan");
+
 
       // Redirect ke halaman utama (ubah sesuai rute kamu)
-      router.push("/home");
+      router.replace("/SubscriptionPlan");
+
     } catch (err: any) {
       alert(err.message);
     }
