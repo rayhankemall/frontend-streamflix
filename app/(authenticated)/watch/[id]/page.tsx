@@ -183,7 +183,7 @@ const movies = [
   {
     id: "pacificrim",
     title: "Pacific Rim",
-    videoUrl: "",
+    videoUrl: "https://gdriveplayer.to/embed2.php?link=dL24JRMeNcGRKvikxQ3dQgRwvqhtZlnAJwoBPASJKWq4A%252F%252Fnv%252FhRMFJfkjna8faNcFZmPtxIEA0HUwvXQVGg6yNg0iLDkgeQLq4RNX4wluKaVRUIWaxATufwbZS6yxHtnAGg7j8Xeo1zGG3d05Wq2Dv1Rjnn%252FukRrvDutQtTUlEBh8gchLioDsysOf5dEO4JfNfvFOWjnLW13LdetOpwxA4fBHnoSUeevCJ9m3mMUtOyz6BVUfEq7HM94qL0IjD2ZFBW2fTu8hV2R%252BslIxxuHqB0JbAYaKRXwTiXvapSx%252FXw%253D%253D",
     synopsis: "In a future where giant monsters called Kaiju rise from the ocean, humanity builds giant robots piloted by two pilots to fight back and save the world from destruction."
   },
 
@@ -260,7 +260,7 @@ const movies = [
   {
     id: "ancikadiayangbersamaku1995",
     title: "Ancika: Dia yang Bersamaku 1995",
-    videoUrl: "",
+    videoUrl: "https://emturbovid.com/t/665178e9dce55",
     synopsis: "This Indonesian drama tells the story of Ancika and her struggles with love, family, and societal expectations in 1995 Jakarta."
   },
 
