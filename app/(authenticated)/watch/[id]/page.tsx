@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import axios from "axios";
+
 
 const movies = [
   {
@@ -366,6 +368,13 @@ type Comment = {
   username: string;
   text: string;
   rating: number;
+  movieId: string;
+};
+
+type SubmitComment = {
+  text: string;
+  rating: number;
+  movieId: string;
 };
 
 export default function WatchPage() {
@@ -378,17 +387,48 @@ export default function WatchPage() {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newComment: Comment = {
-      username: "Admin StreamFlix", // ganti ini nanti kalau pakai auth
-      text: comment,
-      rating,
-    };
-    setComments([newComment, ...comments]);
+  // ✅ Ambil komentar saat halaman dibuka
+  useEffect(() => {
+    if (!id) return;
+
+    axios
+      .get(`http://localhost:4000/comments/${id}`)
+      .then((res) => setComments(res.data))
+      .catch((err) => console.error("Gagal ambil komentar", err));
+  }, [id]);
+
+  // ✅ Kirim komentar ke backend
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const newComment: SubmitComment = {
+    text: comment,
+    rating,
+    movieId: id,
+  };
+
+  try {
+   const token = localStorage.getItem("access_token");
+if (!token) {
+  alert("Kamu belum login!");
+  return;
+}
+
+const res = await axios.post("http://localhost:4000/comments", newComment, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
+
+    setComments([res.data, ...comments]);
     setComment("");
     setRating(5);
-  };
+  } catch (err) {
+    console.error("Gagal kirim komentar", err);
+  }
+};
+
 
   if (!movie) {
     return <div className="text-center mt-20 text-xl">Movie not found</div>;
@@ -396,7 +436,6 @@ export default function WatchPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Video */}
       <div className="w-full aspect-video">
         <iframe
           src={movie.videoUrl}
@@ -410,7 +449,6 @@ export default function WatchPage() {
         ></iframe>
       </div>
 
-      {/* Detail */}
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-2">{movie.title}</h1>
         <p className="text-gray-300 mb-4">{movie.synopsis}</p>

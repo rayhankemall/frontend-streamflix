@@ -30,7 +30,7 @@ export default function Login() {
 // Setelah login sukses
 document.cookie = `token=${data.access_token}; path=/`;
 
-     localStorage.setItem("token", data.access_token);
+    localStorage.setItem("access_token", data.access_token); // ✅ harus konsisten
 document.cookie = `token=${data.access_token}; path=/`;
 router.push("/SubscriptionPlan");
 
