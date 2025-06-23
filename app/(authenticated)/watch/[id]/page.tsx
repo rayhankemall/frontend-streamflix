@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import axios from "axios";
+
 
 const movies = [
   {
@@ -183,7 +185,7 @@ const movies = [
   {
     id: "pacificrim",
     title: "Pacific Rim",
-    videoUrl: "",
+    videoUrl: "https://gdriveplayer.to/embed2.php?link=dL24JRMeNcGRKvikxQ3dQgRwvqhtZlnAJwoBPASJKWq4A%252F%252Fnv%252FhRMFJfkjna8faNcFZmPtxIEA0HUwvXQVGg6yNg0iLDkgeQLq4RNX4wluKaVRUIWaxATufwbZS6yxHtnAGg7j8Xeo1zGG3d05Wq2Dv1Rjnn%252FukRrvDutQtTUlEBh8gchLioDsysOf5dEO4JfNfvFOWjnLW13LdetOpwxA4fBHnoSUeevCJ9m3mMUtOyz6BVUfEq7HM94qL0IjD2ZFBW2fTu8hV2R%252BslIxxuHqB0JbAYaKRXwTiXvapSx%252FXw%253D%253D",
     synopsis: "In a future where giant monsters called Kaiju rise from the ocean, humanity builds giant robots piloted by two pilots to fight back and save the world from destruction."
   },
 
@@ -260,7 +262,7 @@ const movies = [
   {
     id: "ancikadiayangbersamaku1995",
     title: "Ancika: Dia yang Bersamaku 1995",
-    videoUrl: "",
+    videoUrl: "https://emturbovid.com/t/665178e9dce55",
     synopsis: "This Indonesian drama tells the story of Ancika and her struggles with love, family, and societal expectations in 1995 Jakarta."
   },
 
@@ -366,6 +368,13 @@ type Comment = {
   username: string;
   text: string;
   rating: number;
+  movieId: string;
+};
+
+type SubmitComment = {
+  text: string;
+  rating: number;
+  movieId: string;
 };
 
 export default function WatchPage() {
@@ -378,17 +387,48 @@ export default function WatchPage() {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newComment: Comment = {
-      username: "Admin StreamFlix", // ganti ini nanti kalau pakai auth
-      text: comment,
-      rating,
-    };
-    setComments([newComment, ...comments]);
+  // ✅ Ambil komentar saat halaman dibuka
+  useEffect(() => {
+    if (!id) return;
+
+    axios
+      .get(`http://localhost:4000/comments/${id}`)
+      .then((res) => setComments(res.data))
+      .catch((err) => console.error("Gagal ambil komentar", err));
+  }, [id]);
+
+  // ✅ Kirim komentar ke backend
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const newComment: SubmitComment = {
+    text: comment,
+    rating,
+    movieId: id,
+  };
+
+  try {
+   const token = localStorage.getItem("access_token");
+if (!token) {
+  alert("Kamu belum login!");
+  return;
+}
+
+const res = await axios.post("http://localhost:4000/comments", newComment, {
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
+
+
+    setComments([res.data, ...comments]);
     setComment("");
     setRating(5);
-  };
+  } catch (err) {
+    console.error("Gagal kirim komentar", err);
+  }
+};
+
 
   if (!movie) {
     return <div className="text-center mt-20 text-xl">Movie not found</div>;
@@ -396,7 +436,6 @@ export default function WatchPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Video */}
       <div className="w-full aspect-video">
         <iframe
           src={movie.videoUrl}
@@ -410,7 +449,6 @@ export default function WatchPage() {
         ></iframe>
       </div>
 
-      {/* Detail */}
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-2">{movie.title}</h1>
         <p className="text-gray-300 mb-4">{movie.synopsis}</p>
