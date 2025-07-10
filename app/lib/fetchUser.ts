@@ -1,17 +1,26 @@
 export async function fetchUser() {
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  // Pastikan kode ini hanya jalan di browser
+  if (typeof window === "undefined") return null;
+
+  const token = localStorage.getItem("token");
   if (!token) return null;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profile/me`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/profile/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  if (!res.ok) {
-    console.error("Gagal ambil user");
+    if (!res.ok) {
+      console.error("Gagal mengambil data user:", res.statusText);
+      return null;
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error("Error saat fetch user:", err);
     return null;
   }
-
-  return await res.json();
 }
