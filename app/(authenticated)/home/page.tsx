@@ -10,11 +10,8 @@ const HomePage = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
- 
-
   const movieCategories = [
   {
-    title: "Recommended Movies :",
     movies: [
       {
         id: 1,
@@ -353,40 +350,41 @@ const HomePage = () => {
     }))
     .filter((category) => category.movies.length > 0);
 
-  return (
-    <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
-      <main className="p-4">
-        <section className="mb-10 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Welcome to StreamFlix</h1>
-            <p className="text-lg">Find your favorite movie!</p>
-          </div>
+ return (
+  <div className="min-h-screen bg-white text-black transition-colors duration-300">
+    <main className="p-4">
+      <section className="mb-10 flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold mb-2">Welcome to StreamFlix</h1>
+          <p className="text-lg">Find your favorite movie!</p>
+          <h2 className="text-2xl font-bold">Recommended Movies :</h2>
+        </div>
 
-          {/* Search input di atas semua kategori */}
-          <Input
-            size="small"
-            placeholder="Search movie..."
-            prefix={<SearchOutlined />}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-48  bg-white text-black"
+        {/* Search input */}
+        <Input
+          size="small"
+          placeholder="Search movie..."
+          prefix={<SearchOutlined />}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-48"
+        />
+      </section>
+
+      {filteredCategories.length > 0 ? (
+        filteredCategories.map((category, index) => (
+          <MovieRow
+            key={index}
+            title={category.title}
+            movies={category.movies}
           />
-        </section>
-
-        {filteredCategories.length > 0 ? (
-          filteredCategories.map((category, index) => (
-            <MovieRow
-              key={index}
-              title={category.title}
-              movies={category.movies}
-            />
-          ))
-        ) : (
-          <p>No movie match your search.</p>
-        )}
-      </main>
-    </div>
-  );
-};
+        ))
+      ) : (
+        <p className="text-lg">No movie match your search.</p>
+      )}
+    </main>
+  </div>
+);
+}
 
 export default HomePage;

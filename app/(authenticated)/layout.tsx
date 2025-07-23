@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   HomeFilled,
   InfoCircleFilled,
@@ -61,11 +61,6 @@ const SIDEBAR_MENU: MenuProps["items"] = [
     label: "About",
   },
   {
-    key: "/profile",
-    icon: <UserOutlined />,
-    label: "Profile",
-  },
-  {
     key: "/settings",
     icon: <SettingOutlined />,
     label: "Settings",
@@ -77,30 +72,9 @@ interface AuthenticatedLayoutProps {
 }
 
 const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
 
-  // Load theme from localStorage
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "light") setDarkMode(false);
-  }, []);
-
-  // Save theme and apply dark mode
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [darkMode]);
-
-  const toggleTheme = () => setDarkMode((prev) => !prev);
-
-  // Hitung selected keys dari menu horizontal
   const selectedHeaderKeys = [...GENRE_ITEMS, ...WATCHLIST_ITEMS, ...POPULER_ITEMS]
     .flatMap((group) => (group.children ? group.children.map((i) => i.key) : []))
     .includes(pathname)
@@ -111,61 +85,70 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({ children }) =
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: darkMode ? "#374151" : "#6b7280",
-          colorBgContainer: "#ffffff",
-          colorText: darkMode ? "#374151" : "#000000",
+          colorPrimary: "#374151", // abu gelap
+          colorBgContainer: "#f5f5f5", // putih keabu-abuan
+          colorText: "#111827", // teks gelap
         },
       }}
     >
-      <Layout className="min-h-screen dark:bg-black dark:text-white border-none shadow-none">
+      <Layout style={{ minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
         {/* Header */}
-        <Header className="flex items-center justify-between px-4 text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors">
+        <Header
+          style={{
+            backgroundColor: "#f5f5f5",
+            color: "#111827",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingInline: 16,
+          }}
+        >
           <div className="flex items-center gap-4">
-            {/* Logo */}
             <div className="flex items-center gap-2">
               <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
-              <span className="font-bold">StreamFlix</span>
+              <span className="font-bold text-[#111827]">StreamFlix</span>
             </div>
 
-            {/* Menu Horizontal */}
             <Menu
-              theme={darkMode ? "dark" : "light"}
+              theme="light"
               mode="horizontal"
               items={[...GENRE_ITEMS, ...WATCHLIST_ITEMS, ...POPULER_ITEMS]}
               selectedKeys={selectedHeaderKeys}
               onClick={({ key }) => router.push(key)}
-              className="flex items-center text-black dark:text-white bg-white dark:bg-zinc-800 transition-colors"
+              style={{
+                backgroundColor: "#f5f5f5",
+                color: "#111827",
+              }}
             />
           </div>
-
-          {/* Tombol Toggle Tema */}
-          <button
-            onClick={toggleTheme}
-            className="px-2 py-1 rounded border dark:bg-zinc-800 border-none shadow-none"
-          >
-            {darkMode ? "Dark" : "Light"} Mode
-          </button>
         </Header>
 
         {/* Sidebar dan Konten */}
         <Layout>
           <Sider
             width={200}
-            theme={darkMode ? "dark" : "light"}
-            className="dark:bg-zinc-800 border-none shadow-none"
+            theme="light"
+            style={{ backgroundColor: "#f0f0f0" }}
           >
             <Menu
               mode="inline"
               selectedKeys={[pathname]}
               onClick={({ key }) => router.push(key)}
               items={SIDEBAR_MENU}
-              theme={darkMode ? "dark" : "light"}
-              className="text-black dark:text-white dark:bg-zinc-800 border-none shadow-none"
+              theme="light"
+              style={{
+                backgroundColor: "#f0f0f0",
+                color: "#111827",
+              }}
             />
           </Sider>
 
-          <Layout>
-            <Content className="">{children}</Content>
+          <Layout style={{ backgroundColor: "#ffffff" }}>
+            <Content style={{ padding: 24 }}>
+              <div className="min-h-screen bg-white text-black">
+                {children}
+              </div>
+            </Content>
           </Layout>
         </Layout>
       </Layout>
