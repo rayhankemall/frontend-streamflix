@@ -24,20 +24,33 @@ export default function Login() {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || "Login gagal");
-      }
-// Setelah login sukses
-document.cookie = `token=${data.access_token}; path=/`;
+if (!res.ok) {
+  throw new Error(data.message || "Login gagal");
+}
 
-    localStorage.setItem("access_token", data.access_token); // ✅ harus konsisten
-document.cookie = `token=${data.access_token}; path=/`;
+localStorage.setItem("access_token", data.access_token);
+
+// Ambil data user lengkap
+const userRes = await fetch(`http://localhost:4000/users/me`, {
+  headers: { Authorization: `Bearer ${data.access_token}` },
+});
+const userData = await userRes.json();
+localStorage.setItem("user", JSON.stringify(userData));
+
 router.push("/SubscriptionPlan");
 
 
-      // Redirect ke halaman utama (ubah sesuai rute kamu)
-      router.replace("/SubscriptionPlan");
+      // Simpan token dan data user
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      document.cookie = `access_token=${data.access_token}; path=/`;
 
+      // Redirect sesuai status subscription
+      if (data.user.isSubscribed) {
+        router.replace("/home"); // User sudah berlangganan
+      } else {
+        router.replace("/SubscriptionPlan"); // User harus bayar
+      }
     } catch (err: any) {
       alert(err.message);
     }
@@ -46,11 +59,8 @@ router.push("/SubscriptionPlan");
   return (
     <div
       className="w-screen h-screen bg-cover bg-center flex items-center justify-center relative overflow-hidden"
-      style={{
-        backgroundImage: "url('/bg.jpg')",
-      }}
+      style={{ backgroundImage: "url('/bg.jpg')" }}
     >
-      {/* Layer hitam transparan */}
       <div className="absolute inset-0 bg-black opacity-20"></div>
 
       <motion.div
