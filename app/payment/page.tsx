@@ -128,7 +128,7 @@ export default function PaymentPage() {
         method: "POST",
         body: formData,
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
       });
 

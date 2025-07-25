@@ -10,34 +10,51 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
- const handleLogin = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  try {
-    const res = await fetch("http://localhost:4000/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const res = await fetch("http://localhost:4000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      throw new Error(data.message || "Login gagal");
+if (!res.ok) {
+  throw new Error(data.message || "Login gagal");
+}
+
+localStorage.setItem("access_token", data.access_token);
+
+// Ambil data user lengkap
+const userRes = await fetch(`http://localhost:4000/users/me`, {
+  headers: { Authorization: `Bearer ${data.access_token}` },
+});
+const userData = await userRes.json();
+localStorage.setItem("user", JSON.stringify(userData));
+
+router.push("/SubscriptionPlan");
+
+
+      // Simpan token dan data user
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      document.cookie = `access_token=${data.access_token}; path=/`;
+
+      // Redirect sesuai status subscription
+      if (data.user.isSubscribed) {
+        router.replace("/home"); // User sudah berlangganan
+      } else {
+        router.replace("/SubscriptionPlan"); // User harus bayar
+      }
+    } catch (err: any) {
+      alert(err.message);
     }
-
-    // ✅ Set cookie (tapi sebaiknya backend yang set HttpOnly)
-    document.cookie = `token=${data.access_token}; path=/`;
-
-    // ✅ Redirect
-    router.replace("/SubscriptionPlan");
-  } catch (err: any) {
-    alert(err.message);
-  }
-};
-
+  };
 
   return (
     <div
