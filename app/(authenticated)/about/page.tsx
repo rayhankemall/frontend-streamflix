@@ -4,7 +4,7 @@ import React from "react";
 import { Button, Card, Typography } from "antd";
 import { EnvironmentOutlined, MailOutlined, PhoneOutlined } from "@ant-design/icons"; // ⬅️ Import ikon lokasi, email, dan telepon
 import { FaInstagram, FaFacebook, FaTiktok, FaTwitter } from "react-icons/fa"; // ⬅️ Import ikon dari react-icons
-import { store } from "#/store";
+import { store } from "@/store";
 
 const { Title, Paragraph } = Typography;
 

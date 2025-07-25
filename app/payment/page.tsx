@@ -10,6 +10,7 @@ import Link from "next/link";
 import { CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import confetti from "canvas-confetti";
+import TokenUtil from '#/utils/token.ts'
 
 export default function PaymentPage() {
   const searchParams = useSearchParams();
@@ -24,6 +25,7 @@ export default function PaymentPage() {
   const [socketUrl, setSocketUrl] = useState("");
   const [socket, setSocket] = useState<Socket | null>(null);
   const router = useRouter();
+
 
   useEffect(() => {
     const amountParam = searchParams.get("amount");
@@ -99,6 +101,9 @@ export default function PaymentPage() {
       const response = await fetch(`${socketUrl}/payment/upload-proof`, {
         method: "POST",
         body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
       });
 
       if (response.ok) {

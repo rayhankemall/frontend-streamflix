@@ -10,38 +10,34 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+ const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    try {
-      const res = await fetch("http://localhost:4000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+  try {
+    const res = await fetch("http://localhost:4000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.message || "Login gagal");
-      }
-// Setelah login sukses
-document.cookie = `token=${data.access_token}; path=/`;
-
-    localStorage.setItem("access_token", data.access_token); // ✅ harus konsisten
-document.cookie = `token=${data.access_token}; path=/`;
-router.push("/SubscriptionPlan");
-
-
-      // Redirect ke halaman utama (ubah sesuai rute kamu)
-      router.replace("/SubscriptionPlan");
-
-    } catch (err: any) {
-      alert(err.message);
+    if (!res.ok) {
+      throw new Error(data.message || "Login gagal");
     }
-  };
+
+    // ✅ Set cookie (tapi sebaiknya backend yang set HttpOnly)
+    document.cookie = `token=${data.access_token}; path=/`;
+
+    // ✅ Redirect
+    router.replace("/SubscriptionPlan");
+  } catch (err: any) {
+    alert(err.message);
+  }
+};
+
 
   return (
     <div
