@@ -12,8 +12,6 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
 
     try {
       const res = await fetch("http://localhost:4000/auth/login", {
@@ -23,16 +21,7 @@ export default function Login() {
         },
         body: JSON.stringify({ email, password }),
       });
-    try {
-      const res = await fetch("http://localhost:4000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
 
-      const data = await res.json();
       const data = await res.json();
 
 if (!res.ok) {
@@ -70,11 +59,8 @@ router.push("/SubscriptionPlan");
   return (
     <div
       className="w-screen h-screen bg-cover bg-center flex items-center justify-center relative overflow-hidden"
-      style={{
-        backgroundImage: "url('/bg.jpg')",
-      }}
+      style={{ backgroundImage: "url('/bg.jpg')" }}
     >
-      {/* Layer hitam transparan */}
       <div className="absolute inset-0 bg-black opacity-20"></div>
 
       <motion.div
