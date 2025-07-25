@@ -61,11 +61,6 @@ const SIDEBAR_MENU: MenuProps["items"] = [
     label: "About",
   },
   {
-    key: "/profile",
-    icon: <UserOutlined />,
-    label: "Profile",
-  },
-  {
     key: "/settings",
     icon: <SettingOutlined />,
     label: "Settings",

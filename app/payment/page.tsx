@@ -39,30 +39,56 @@ export default function PaymentPage() {
     setSocketUrl(url);
     if (!url) return;
 
-    const newSocket = io(url, {
-      transports: ["websocket"],
-    });
+    const newSocket = io(url, { transports: ["websocket"] });
 
     newSocket.on("connect", () => {
       setSocketId(newSocket.id);
-      newSocket.on(`payment-completed:${newSocket.id}`, () => {
+
+      newSocket.on(`payment-completed:${newSocket.id}`, async () => {
         setIsVerified(true);
         setShowNotification(true);
 
-        // 🎉 Confetti burst
+        // 🎉 Confetti
         confetti({
           particleCount: 150,
           spread: 100,
           origin: { y: 0.2 },
         });
 
-        // 🔊 Play sound
+        // 🔊 Sound
         const audio = new Audio("/success.mp3");
         audio.play();
 
-        // 📱 Vibrate phone
+        // 📱 Vibrate
         if (typeof window !== "undefined" && navigator.vibrate) {
           navigator.vibrate([100, 50, 100]);
+        }
+
+        // 🔄 Update subscription di backend
+        const token = localStorage.getItem("access_token");
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
+        if (token && user?.id) {
+          await fetch(`http://localhost:4000/users/${user.id}/subscription`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              isSubscribed: true,
+              subscriptionEnd: new Date(
+                Date.now() + 30 * 24 * 60 * 60 * 1000
+              ), // 30 hari
+            }),
+          });
+
+          // Update local user data
+          const updatedUser = {
+            ...user,
+            isSubscribed: true,
+            subscriptionEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+          };
+          localStorage.setItem("user", JSON.stringify(updatedUser));
         }
       });
     });
@@ -88,9 +114,9 @@ export default function PaymentPage() {
       return;
     }
 
-    const renamedFile = new File([
-      selectedFile,
-    ], `bukti__${plan}__${amount}.jpg`, { type: selectedFile.type });
+    const renamedFile = new File([selectedFile], `bukti__${plan}__${amount}.jpg`, {
+      type: selectedFile.type,
+    });
 
     const formData = new FormData();
     formData.append("file", renamedFile);
@@ -148,7 +174,9 @@ export default function PaymentPage() {
                 </div>
               </div>
               <h2 className="text-2xl font-bold mb-1">Pembayaran berhasil</h2>
-              <p className="text-white/90 text-sm">Hore! Pembayaranmu sudah selesai.</p>
+              <p className="text-white/90 text-sm">
+                Hore! Pembayaranmu sudah selesai.
+              </p>
 
               <motion.button
                 whileHover={{ scale: 1.05 }}
