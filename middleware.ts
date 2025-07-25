@@ -1,20 +1,19 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(req: NextRequest) {
-  const token = req.cookies.get("access_token")?.value;
+  const token = req.cookies.get('token') || req.headers.get('authorization')
+  const url = req.nextUrl.clone()
+  const isAuthPage = url.pathname === '/login' || url.pathname === '/signup'
 
-  // Halaman publik (tidak butuh login)
-  const publicPaths = ["/login", "/signup", "/"];
-
-  if (!token && !publicPaths.includes(req.nextUrl.pathname)) {
-    // Redirect ke login jika tidak ada token
-    return NextResponse.redirect(new URL("/login", req.url));
+  // Jika user sudah login dan mengakses login/signup, redirect ke /payments
+  if (token && isAuthPage) {
+    url.pathname = '/SubscriptionPlan'
+    return NextResponse.redirect(url)
   }
 
-  return NextResponse.next();
+  return NextResponse.next()
 }
 
 export const config = {
-  matcher: ["/((?!_next|.*\\..*).*)"], // Semua route kecuali assets/_next
-};
+  matcher: ['/login', '/signup'],
+}

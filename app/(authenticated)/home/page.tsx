@@ -1,20 +1,74 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
+// MovieRow Component
+const MovieRow = ({
+  title,
+  movies,
+  onAddToWatchlist,
+}: {
+  title: string;
+  movies: { id: number; title: string; image: string; slug?: string }[];
+  onAddToWatchlist: (movie: any) => void;
+}) => (
+  <section className="mb-8">
+    {title && <h2 className="text-xl font-semibold mb-3">{title}</h2>}
+    <div className="overflow-x-auto overflow-y-hidden whitespace-nowrap hide-scrollbar pb-2">
+      <div className="flex gap-3">
+        {movies.map((movie) => (
+          <div key={`${title}-${movie.id}`} className="w-36 flex-shrink-0">
+            <Link
+              href={`/watch/${movie.slug || movie.title.toLowerCase().replace(/\s+/g, "")}`}
+            >
+              <div className="group rounded overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105">
+                <div className="relative w-full aspect-[2/3] bg-gray-300 dark:bg-gray-800">
+                  <img
+                    src={movie.image}
+                    alt={movie.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+              </div>
+            </Link>
+            <div className="bg-gray-100 dark:bg-zinc-900 py-1 px-1 text-center">
+              <h3 className="text-xs font-semibold truncate" title={movie.title}>
+                {movie.title}
+              </h3>
+              <button
+                onClick={() => onAddToWatchlist(movie)}
+                className="mt-1 w-full bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 rounded"
+              >
+                + Watchlist
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
 
 const HomePage = () => {
-  const [darkMode, setDarkMode] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
- 
+  const addToWatchlist = (movie: any) => {
+    const current = JSON.parse(localStorage.getItem("watchlist") || "[]");
+    const exists = current.some((m: any) => m.id === movie.id);
+    if (!exists) {
+      const updated = [...current, movie];
+      localStorage.setItem("watchlist", JSON.stringify(updated));
+      alert(`${movie.title} added to watchlist!`);
+    } else {
+      alert(`${movie.title} is already in your watchlist.`);
+    }
+  };
 
   const movieCategories = [
   {
-    title: "Recommended Movies :",
     movies: [
       {
         id: 1,
@@ -300,50 +354,7 @@ const HomePage = () => {
   },
 ];
 
-
-
-  const MovieRow = ({
-    title,
-    movies,
-  }: {
-    title: string;
-    movies: { id: number; title: string; image: string; slug?: string }[];
-  }) => (
-    <section className="mb-8">
-      {title && <h2 className="text-xl font-semibold mb-3">{title}</h2>}
-      <div className="overflow-x-auto overflow-y-hidden whitespace-nowrap hide-scrollbar pb-2">
-        <div className="flex gap-3">
-          {movies.map((movie) => (
-            <Link
-              key={`${title}-${movie.id}`}
-              href={`/watch/${
-                movie.slug || movie.title.toLowerCase().replace(/\s+/g, "")
-              }`}
-            >
-              <div className="group rounded overflow-hidden shadow-md cursor-pointer transition-transform hover:scale-105 w-36 flex-shrink-0">
-                <div className="relative w-full aspect-[2/3] bg-gray-300 dark:bg-gray-800">
-                  <img
-                    src={movie.image}
-                    alt={movie.title}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="bg-gray-100 dark:bg-zinc-900 py-1 px-1">
-                  <h3
-                    className="text-xs font-semibold text-center truncate"
-                    title={movie.title}
-                  >
-                    {movie.title}
-                  </h3>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-  // Filter movies pada semua kategori
+  // Filter berdasarkan pencarian
   const filteredCategories = movieCategories
     .map((category) => ({
       ...category,
@@ -354,22 +365,23 @@ const HomePage = () => {
     .filter((category) => category.movies.length > 0);
 
   return (
-    <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-white text-black transition-colors duration-300">
       <main className="p-4">
         <section className="mb-10 flex justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold mb-2">Welcome to StreamFlix</h1>
             <p className="text-lg">Find your favorite movie!</p>
+            <h2 className="text-2xl font-bold">Recommended Movies :</h2>
           </div>
 
-          {/* Search input di atas semua kategori */}
+          {/* Search input */}
           <Input
             size="small"
             placeholder="Search movie..."
             prefix={<SearchOutlined />}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-48  bg-white text-black"
+            className="w-48"
           />
         </section>
 
@@ -379,10 +391,11 @@ const HomePage = () => {
               key={index}
               title={category.title}
               movies={category.movies}
+              onAddToWatchlist={addToWatchlist}
             />
           ))
         ) : (
-          <p>No movie match your search.</p>
+          <p className="text-lg">No movie match your search.</p>
         )}
       </main>
     </div>
